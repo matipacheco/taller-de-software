@@ -1,5 +1,6 @@
 package org.tds.sgh.system;
 
+//amarillo
 import org.tds.sgh.business.CadenaHotelera;
 import org.tds.sgh.dtos.ClienteDTO;
 import org.tds.sgh.infrastructure.Infrastructure;
