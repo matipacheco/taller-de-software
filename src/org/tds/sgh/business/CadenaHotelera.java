@@ -125,7 +125,6 @@ public class CadenaHotelera
 	public Boolean confirmarDisponibilidad(String nombreHotel , String nombreTipoHabitación, GregorianCalendar fechaInicio, GregorianCalendar fechaFin)
 	{
 		Hotel hotel = hoteles.get(nombreHotel);
-		System.out.println("EL hotel es --- " + hotel.getNombre());
 		return hotel.confirmarDisponibilidad(nombreTipoHabitación, fechaInicio, fechaFin);
 	}
 	
@@ -154,12 +153,6 @@ public class CadenaHotelera
 	
 	public Set<Reserva> buscarReservasDelCliente(Cliente clienteSeleccionado)
 	{
-		/**
-		 * 1 creear lista vacia
-		 * 2 iterar en todos los hoteles de la vida
-		 * 3 hacer un hotel.buscarReservasDelCliente(cliente)
-		 * 4 iterar sobre esas reservas, y si son del cliente se agregan a la lista
-		 */
 		Set<Reserva> reservasCliente = new HashSet<Reserva>();
 		
 		for (Hotel hotel : listarHoteles()) {
@@ -174,9 +167,28 @@ public class CadenaHotelera
 		return reservasCliente;
 	}
 	
-	public Reserva modificarReserva(Reserva reserva, Cliente cliente, String nombreHotel, String nombreTipoHabitacion, GregorianCalendar fechaInicial, GregorianCalendar fechaFinal, Boolean modificadoPorHuesped)
+	public Reserva modificarReserva(
+			Reserva reserva,
+			Cliente cliente,
+			String nombreHotel,
+			String nombreTipoHabitacion,
+			GregorianCalendar fechaInicial,
+			GregorianCalendar fechaFinal,
+			Boolean modificadoPorHuesped) throws Exception
 	{
-		return null;
+		Hotel hotelAnterior = reserva.getHotel();
+		Hotel hotelNuevo = buscarHotel(nombreHotel);
+		
+		if (!hotelNuevo.getNombre().equals(hotelAnterior.getNombre())) {
+			hotelAnterior.quitarReserva(reserva);
+		}
+		
+		hotelNuevo.agregarReserva(reserva);
+		TipoHabitacion tipoHabitacionNuevo = buscarTipoHabitacion(nombreTipoHabitacion);
+		
+		Reserva reservaActualizada = reserva.update(tipoHabitacionNuevo, fechaInicial, fechaFinal, modificadoPorHuesped, hotelNuevo);
+		reservaActualizada.enviarMail("reservaActualizada");
+		return reservaActualizada;
 	}
 	
 	public Set<Reserva> buscarReservasPendientes(String nombreHotel)
@@ -260,5 +272,11 @@ public class CadenaHotelera
 		} catch (Exception e) {
 			return null;
 		}
+	}
+	
+	public Reserva cancelarReservaDelCliente(Reserva reserva) {
+		Reserva reservaActualizada = reserva.cancelar();
+		reservaActualizada.enviarMail("reservaCancelada");
+		return reservaActualizada;
 	}
 }

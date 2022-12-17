@@ -36,7 +36,6 @@ public class SRController implements IAltaClienteController, ICadenaController, 
 
 			return DTO.getInstance().map(clienteCreado);
 		} catch(Exception e) {
-			System.out.println("excepcion?" + e.getMessage());
 			return null;
 		}
 	}
@@ -113,19 +112,12 @@ public class SRController implements IAltaClienteController, ICadenaController, 
 		return DTO.getInstance().mapHoteles(hoteles);
 	}
 
-	/*
 	@Override
 	public ReservaDTO cancelarReservaDelCliente() throws Exception {
 		Reserva reservaCancelada = this.cadenaHotelera.cancelarReservaDelCliente(reserva); 
 		return DTO.getInstance().map(reservaCancelada);
-	}*/
+	}
 
-	/**
-	 * Ninguno de estos están diseñados, pero tiene sentido que lo haga la cadena hotelera,
-	 * pues esta conoce todos sus clientes, hoteles, y tipos de habitación.
-	 *  
-	 * Nota: al crear cliente / hotel / tipo de habitación hay que agregarlo a la lista de clientes de la cadena hotelera 
-	 */
 	@Override
 	public ClienteDTO agregarCliente(String rut, String nombre, String direccion, String telefono, String mail) throws Exception
 	{			
@@ -171,12 +163,5 @@ public class SRController implements IAltaClienteController, ICadenaController, 
 	@Override
 	public Set<TipoHabitacionDTO> getTiposHabitacion() {
 		return DTO.getInstance().mapTiposHabitacion(this.cadenaHotelera.listarTiposHabitacion());
-	}
-
-	@Override
-	public ReservaDTO cancelarReservaDelCliente() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
+	}	
 }

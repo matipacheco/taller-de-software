@@ -53,4 +53,8 @@ public class Habitacion
 	{
 		this.reserva = reserva;
 	}
+	
+	public void liberarHabitacion() {
+		this.reserva = null;
+	}
 }

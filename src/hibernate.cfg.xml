@@ -28,6 +28,8 @@
 		<mapping class="org.tds.sgh.business.Habitacion"/>
 		<mapping class="org.tds.sgh.business.Hotel"/>
 		<mapping class="org.tds.sgh.business.TipoHabitacion"/>
+		<mapping class="org.tds.sgh.business.Reserva"/>
+		<mapping class="org.tds.sgh.business.Huesped"/>
 		
 	</session-factory>
 </hibernate-configuration>

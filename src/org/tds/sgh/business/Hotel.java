@@ -86,12 +86,12 @@ public class Hotel
 	
 	public void quitarReserva(Reserva reserva)
 	{
-		
+		this.reservas.remove(reserva);
 	}
 	
 	public void agregarReserva(Reserva reserva)
 	{
-		// this.reservas
+		this.reservas.add(reserva);
 	}
 	
 	public Set<Reserva> getReservasHotel()

@@ -45,10 +45,14 @@ public class Reserva {
 		return true;
 	}
 	
-	public Reserva update(String nombreTipoHabitacion, GregorianCalendar fechaInicio, GregorianCalendar fechaFin, boolean mph, Hotel hotel) {		
-		//not implemented
-		// return new Reserva();
-		return null;
+	public Reserva update(TipoHabitacion tipoHabitacion, GregorianCalendar fechaInicio, GregorianCalendar fechaFin, boolean mph, Hotel hotel) {		
+		this.tipoHabitacion = tipoHabitacion;
+		this.fechaInicio = fechaInicio;
+		this.fechaFin = fechaFin;
+		this.modificablePorHuesped = mph;
+		this.hotel = hotel;
+		
+		return this;
 	}
 	
 	public void enviarMail(String evento) {
@@ -62,6 +66,12 @@ public class Reserva {
 		case "reservaTomada":
 			asunto = "Tu estadía ha comenzado!";
 			mensaje = "Bienvenido!";
+		case "reservaCancelada":
+			asunto = "Tu reserva ha sido cancelada";
+			mensaje = "Adiosin";
+		case "reservaActualizada":
+			asunto = "Tu reserva ha sido actualizada";
+			mensaje = "no se";
 		}
 		
 		Infrastructure.getInstance().getSistemaMensajeria().enviarMail(destinatario, asunto, mensaje);
@@ -164,6 +174,15 @@ public class Reserva {
 			return this.habitacion.getNombre();
 		}
 		return null;
+	}
+	
+	public Reserva cancelar() {
+		this.estado = Estado.Cancelada;
+		if (this.habitacion != null) {			
+			this.habitacion.liberarHabitacion();
+			this.habitacion = null;
+		}
+		return this;
 	}
 	
 }
