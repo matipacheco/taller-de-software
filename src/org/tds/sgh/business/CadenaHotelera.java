@@ -92,6 +92,69 @@ public class CadenaHotelera
 		return cliente;
 	}
 	
+	public Set<Cliente> seleccionarCliente(String rut)
+	{
+		return null;
+		
+	}
+	
+	public Set<Boolean> confirmarDisponibilidad(String nombreHotel , String nombreTipoHabitación, Date fechainicio, Date fechafin)
+	{
+		return true;
+	}
+	
+	public Set<Reserva> registrarReserva(Cliente cliente, String nombreHotel, String nombreTipoHotel, Date fechaInicial, Date fechaFinal, Boolean modificadoPorHuesped)
+	{
+		
+	}
+	
+	public Set <List<Hotel>> sugerirAlternativas(String pais, String nombreTipoHotel, Date fechaInicial, Date fechaFinal)
+	{
+		
+	}
+	
+	public Set<List<Reserva>> buscarReservaDelCliente(Cliente clienteSeleccionado)
+	{
+		
+	}
+	
+	public Set<Reserva> seleccionarReserva(String codigo)
+	{
+		return null;
+		
+	}
+	
+	public Set<Reserva> modificarReserva(Reserva reserva, Cliente cliente, String nombreHotel, String nombreTipoHotel, Date fechaInicial, Date fechaFinal, Boolean modificadoPorHuesped)
+	{
+		
+	}
+	
+	public Set<Reserva> buscarReservasPendientes(String nombreHotel)
+	{
+		return null;
+		
+	}
+	
+	public Set<Reserva> buscarReserva(String codigoReserva)
+	{
+		return null;	
+	}
+	
+	public Set<Reserva> registrarHuesped(Reserva reserva, String nombre, String documento)
+	{
+		return null;
+	}
+	
+	public Set<Reserva> tomarReserva(Reserva reserva)
+	{
+		return null;
+	}
+	
+	public Set<Reserva> buscarReservasDelCliente(Cliente clienteSeleccionado)
+	{
+		
+	}
+	
 	public Set<Cliente> buscarClientes(String patronNombreCliente)
 	{
 		Set<Cliente> clientesEncontrados = new HashSet<Cliente>();

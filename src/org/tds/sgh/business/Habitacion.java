@@ -9,6 +9,7 @@ public class Habitacion
 	
 	private TipoHabitacion tipoHabitacion;
 	
+	private Reserva reserva;
 	// --------------------------------------------------------------------------------------------
 	
 	public Habitacion(TipoHabitacion tipoHabitacion, String nombre)
@@ -28,5 +29,22 @@ public class Habitacion
 	public TipoHabitacion getTipoHabitacion()
 	{
 		return this.tipoHabitacion;
+	}
+	
+	public Boolean esDeTipo(String nombreTipoHabitación)
+	{
+		return null;
+		
+	}
+
+	public Boolean asignada()
+	{
+		return null;
+		
+	}
+
+	public void asignarReserva(Reserva reserva)
+	{
+		
 	}
 }
