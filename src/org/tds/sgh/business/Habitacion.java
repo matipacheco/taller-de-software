@@ -14,8 +14,8 @@ public class Habitacion
 	
 	public Habitacion(TipoHabitacion tipoHabitacion, String nombre)
 	{
+		this.reserva = null;
 		this.nombre = nombre;
-		
 		this.tipoHabitacion = tipoHabitacion;
 	}
 	
@@ -33,18 +33,16 @@ public class Habitacion
 	
 	public Boolean esDeTipo(String nombreTipoHabitación)
 	{
-		return null;
-		
+		return this.nombre == nombreTipoHabitación;
 	}
 
 	public Boolean asignada()
 	{
-		return null;
-		
+		return this.reserva != null;
 	}
 
 	public void asignarReserva(Reserva reserva)
 	{
-		
+		this.reserva = reserva;
 	}
 }

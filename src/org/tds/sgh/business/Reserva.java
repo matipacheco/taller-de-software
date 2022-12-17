@@ -5,11 +5,18 @@ import java.util.Set;
 
 import org.tds.sgh.infrastructure.Infrastructure;
 
-//amarillo
 public class Reserva {
 
-	private String estado;
-	private int codigo;
+	public enum Estado {
+		Pendiente,
+		Tomada,
+		Finalizada,
+		Cancelada,
+		NoTomada,
+	}
+
+	private Estado estado;
+	private long codigo;
 	private GregorianCalendar fechaInicio;
 	private GregorianCalendar fechaFin;
 	private boolean modificablePorHuesped;
@@ -18,9 +25,7 @@ public class Reserva {
 	private Hotel hotel;
 	private Set<Huesped> huespedes;
 
-	private enum Estado {
-  	
-	}
+	
 	
 	public Reserva (TipoHabitacion tipoHabitacion, Cliente cliente, GregorianCalendar fechaInicio, GregorianCalendar fechaFin, boolean mph, Hotel hotel) {
 		this.tipoHabitacion = tipoHabitacion;
@@ -29,11 +34,10 @@ public class Reserva {
 		this.fechaFin = fechaFin;
 		this.modificablePorHuesped = mph;
 		this.hotel = hotel;
+		this.estado = Estado.Pendiente;
 	}
 	
 	public boolean coincide(String nombreTipoHabitacion, GregorianCalendar fechaInicio, GregorianCalendar fechaFin) {
-		
-		
 		//not implemented
 		return true;
 	}
@@ -50,8 +54,11 @@ public class Reserva {
 
 		switch(evento) {
 		case "reservaCreada":
-			asunto = "Reserva creada exitosamente";
-			mensaje = "Holi";
+			asunto = "Reserva " + Long.toString(this.getCodigo()) + " creada exitosamente";
+			mensaje = "Tu reserva entre las fechas " + this.getFechaInicio().toString() + " y " + this.getFechaFin().toString() + " ha sido creada exitosamente";
+		case "reservaTomada":
+			asunto = "Tu estadía ha comenzado!";
+			mensaje = "Bienvenido!";
 		}
 		
 		Infrastructure.getInstance().getSistemaMensajeria().enviarMail(destinatario, asunto, mensaje);
@@ -62,27 +69,48 @@ public class Reserva {
 		//no implementado
 		return false;
 	}
-	
+
 	public boolean estaPendiente() {
-		
-		//no implementado
-		return false;
+		return estado == Estado.Pendiente;
 	}
 	
-	public void agregarHuesped(String nombre, String documento) {
-		
-		//no implementado
-	}
-	
-	public Reserva tomarReserva() {
-		
-		//no implementado
+	public Reserva agregarHuesped(String nombre, String documento) {
+		Huesped huesped = new Huesped(nombre, documento);
+		this.huespedes.add(huesped);
 		return this;
 	}
 	
-	public boolean reservaPendienteEnRango(String nombreTipoHabitacion, GregorianCalendar fechaInicio, GregorianCalendar fechaFin) {
+	public Reserva tomarReserva() {
+		Set<Habitacion> habitacionesHotel = hotel.listarHabitaciones();
+
+		for (Habitacion habitacion : habitacionesHotel) {
+			if (habitacion.esDeTipo(this.tipoHabitacion.getNombre()) && !habitacion.asignada()) {
+				habitacion.asignarReserva(this);
+				break;
+			}
+		}
 		
-		//no implementado
+		this.estado = Estado.Tomada;		
+		return this;
+	}
+	
+	public boolean reservaPendienteEnRango(String nombreTipoHabitacion, GregorianCalendar fechainicio, GregorianCalendar fechafin) {
+		if(this.tipoHabitacion.getNombre().equals(nombreTipoHabitacion)) {
+		
+			if(
+				!((Infrastructure.getInstance().getCalendario().esAnterior(fechainicio, this.fechaInicio)
+			&& Infrastructure.getInstance().getCalendario().esAnterior(fechafin, this.fechaInicio)) || 
+			 Infrastructure.getInstance().getCalendario().esPosterior(fechainicio, this.fechaFin))
+			 
+			 
+			 )
+			 
+			  {
+				return true;
+			}
+			
+		}
+		
 		return false;
 	}
 	
@@ -94,7 +122,7 @@ public class Reserva {
 		return tipoHabitacion;
 	}
 	
-	public int getCodigo() {
+	public long getCodigo() {
 		return codigo;
 	}
 	
@@ -110,11 +138,11 @@ public class Reserva {
 		return this.cliente.getRut();
 	}
 	
-	public String getTipoHabitacion() {
-		return this.tipoHabitacion.getNombre();
+	public TipoHabitacion getTipoHabitacion() {
+		return this.tipoHabitacion;
 	}
 	
-	public String getEstado(){
+	public Estado getEstado(){
 		return this.estado;
 	}
 	

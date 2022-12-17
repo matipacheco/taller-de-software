@@ -25,12 +25,6 @@ public class SRController implements IAltaClienteController, ICadenaController, 
 	public SRController(CadenaHotelera ch) {
 		this.cadenaHotelera = ch;
 	}
-	
-	public SRController(CadenaHotelera ch, Reserva res, Cliente cl) {
-		this.cadenaHotelera = ch;
-		this.reserva = res;
-		this.cliente= cl;
-	}
 
 	@Override
 	public ClienteDTO registrarCliente(String rut, String nombre, String direccion, String telefono, String mail) {
@@ -50,8 +44,9 @@ public class SRController implements IAltaClienteController, ICadenaController, 
 
 	@Override
 	public ReservaDTO seleccionarReserva(long codigoReserva) throws Exception {
-		Reserva reserva = this.cadenaHotelera.seleccionarReserva(codigoReserva);
-		return DTO.getInstance().map(reserva);
+		Reserva reservaSeleccionada = this.cadenaHotelera.seleccionarReserva(codigoReserva);
+		reserva = reservaSeleccionada;
+		return DTO.getInstance().map(reservaSeleccionada);
 	}
 
 	@Override
@@ -87,8 +82,9 @@ public class SRController implements IAltaClienteController, ICadenaController, 
 
 	@Override
 	public ClienteDTO seleccionarCliente(String rut) throws Exception {
-		Cliente clientes = this.cadenaHotelera.seleccionarCliente(rut);
-		return DTO.getInstance().map(cliente);
+		Cliente clienteSeleccionado = this.cadenaHotelera.seleccionarCliente(rut);
+		cliente = clienteSeleccionado;
+		return DTO.getInstance().map(clienteSeleccionado);
 	}
 
 	@Override

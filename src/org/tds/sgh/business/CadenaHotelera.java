@@ -111,24 +111,17 @@ public class CadenaHotelera
 		
 	}
 	
-	public Boolean confirmarDisponibilidad(String nombreHotel , String nombreTipoHabitación, GregorianCalendar fechainicio, GregorianCalendar fechafin)
+	public Boolean confirmarDisponibilidad(String nombreHotel , String nombreTipoHabitación, GregorianCalendar fechaInicio, GregorianCalendar fechaFin)
 	{
-		return true;
+		Hotel hotel = hoteles.get(nombreHotel);
+		return hotel.confirmarDisponibilidad(nombreTipoHabitación, fechaInicio, fechaFin);
 	}
 	
 	public Reserva registrarReserva(Cliente cliente, String nombreHotel, String nombreTipoHabitacion, GregorianCalendar fechaInicial, GregorianCalendar fechaFinal, Boolean modificablePorHuesped)
 	{
-		// 1 buscar hotel con nombre hotel
-		// 2 buscar tipo hab con nombre nombreTipoHabitacion
-		// 3 hotel.crear reserva ()
-		// 4 reserva.crear() (reemplazo por un new())
-		// 5 agregar la reserva a la collectino de reservas del hotel
-		// 6 enviar el correo
-		
 		Hotel hotel = hoteles.get(nombreHotel);
 		TipoHabitacion tipoHabitacion = tiposHabitacion.get(nombreTipoHabitacion);
-		Reserva reservaCreada = hotel.crearReserva(tipoHabitacion, cliente, fechaInicial, fechaFinal, modificablePorHuesped);
-		return null;
+		return hotel.crearReserva(tipoHabitacion, cliente, fechaInicial, fechaFinal, modificablePorHuesped);
 	}
 	
 	public Set<Hotel> sugerirAlternativas(String pais, String nombreTipoHabitacion, GregorianCalendar fechaInicial, GregorianCalendar fechaFinal)
@@ -152,12 +145,6 @@ public class CadenaHotelera
 		return null;
 	}
 	
-	public Reserva seleccionarReserva(Long codigo)
-	{
-		return null;
-		
-	}
-	
 	public Reserva modificarReserva(Reserva reserva, Cliente cliente, String nombreHotel, String nombreTipoHabitacion, GregorianCalendar fechaInicial, GregorianCalendar fechaFinal, Boolean modificadoPorHuesped)
 	{
 		return null;
@@ -165,23 +152,31 @@ public class CadenaHotelera
 	
 	public Set<Reserva> buscarReservasPendientes(String nombreHotel)
 	{
-		return null;
-		
+		Hotel hotel = hoteles.get(nombreHotel);
+		return hotel.buscarReservasPendientes();
 	}
-	
-	public Reserva buscarReserva(String codigoReserva)
-	{
-		return null;	
+
+	public Reserva seleccionarReserva(Long codigo)
+	{	 
+		 for(Hotel hotel: hoteles.values()) {
+			 Reserva reserva = hotel.buscarReserva(codigo);
+			 if(reserva != null)
+			 	return reserva;
+		 }
+		
+		return null;
 	}
 	
 	public Reserva registrarHuesped(Reserva reserva, String nombre, String documento)
 	{
-		return null;
+		return reserva.agregarHuesped(nombre, documento);
 	}
 	
 	public Reserva tomarReserva(Reserva reserva)
 	{
-		return null;
+		Reserva reservaActualizada = reserva.tomarReserva();
+		reservaActualizada.enviarMail("reservaTomada");
+		return reservaActualizada;
 	}
 	
 	public Set<Reserva> buscarReservasDelCliente(Cliente clienteSeleccionado)

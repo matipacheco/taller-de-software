@@ -25,6 +25,7 @@ public class Hotel
 		
 		this.pais = pais;
 		this.reservas = new HashSet<Reserva>();
+		
 	}
 	
 	// --------------------------------------------------------------------------------------------
@@ -45,13 +46,36 @@ public class Hotel
 	
 	public boolean confirmarDisponibilidad(String nombreTipoHabitacion, GregorianCalendar fechainicio, GregorianCalendar fechafin)
 	{
-		int CantHabs;
+		int cantHabs = 0;
+		for (Habitacion habitacion : habitaciones.values()) {
+			TipoHabitacion tipo = habitacion.getTipoHabitacion();
+			if (tipo.getNombre().equals(nombreTipoHabitacion)) {
+				cantHabs++;
+			}
+		}
+		int contReservas = 0;
+
+		for (Reserva reserva : reservas) {
+			Boolean reservaPendienteEnRango = reserva.reservaPendienteEnRango(nombreTipoHabitacion, fechainicio, fechafin);
+			if (reservaPendienteEnRango) {
+				contReservas++;
+			}
+		}
 		
-		return true;
+		// esto se resumen en return cantHabs > contReservas 
+		if(cantHabs > contReservas) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
-	public Reserva buscarReserva(String codigoReserva)
+	public Reserva buscarReserva(Long codigoReserva)
 	{
+		for(Reserva reserva : reservas)
+			if(reserva.getCodigo() == codigoReserva)
+				return reserva;
+		
 		return null;	
 	}
 	
@@ -72,17 +96,33 @@ public class Hotel
 	
 	public void agregarReserva(Reserva reserva)
 	{
-		
+		// this.reservas
 	}
 	
+	public Set<Reserva> buscarReservasHotel()
+	{
+
+		return null;
+	}
+
 	public Set<Reserva> buscarReservasPendientes()
 	{
-		return null;
+		
+		Set<Reserva> reservasPendientes = new HashSet<Reserva>();
+		
+		for(Reserva reserva: this.reservas) {
+			
+			if(reserva.estaPendiente()) {
+				reservasPendientes.add(reserva);
+			}
+			
+		}
+		return reservasPendientes;
 	}
-	
-	public Set<Habitacion> getHabitaciones()
+
+	public Map<String, Habitacion> getHabitaciones()
 	{
-		return null;
+		return habitaciones;
 	}
 	
 	public String getNombre()

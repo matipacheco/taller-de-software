@@ -64,8 +64,18 @@ public class DTO
 	
 	public ReservaDTO map(Reserva reserva)
 	{
-		// return new ReservaDTO(reserva.getCodigo(), reserva.rutCliente(), reserva.getHotel(), reserva.getTipoHabitacion(), reserva.getFechaInicio(), reserva.getFechaFin(), reserva.getModificablePorHuesped(), reserva.getEstado(), "reserva.getHabitacion()", this.mapHuespedes(reserva.getHuespedes()));
-		return null;
+		return new ReservaDTO(
+				reserva.getCodigo(),
+				reserva.rutCliente(),
+				reserva.getHotel().getNombre(),
+				reserva.getTipoHabitacion().getNombre(),
+				reserva.getFechaInicio(),
+				reserva.getFechaFin(),
+				reserva.getModificablePorHuesped(),
+				reserva.getEstado().toString(),
+				null,//  reserva.,
+				this.mapHuespedes(reserva.getHuespedes())
+				);
 	}
 
 	public Set<ClienteDTO> mapClientes(Set<Cliente> clientes)
@@ -128,7 +138,7 @@ public class DTO
 		return reservasDTO;
 	}
 	
-	public Set<HuespedDTO> mapHuespedes(Set<Huesped> huespedes)
+	public HuespedDTO[] mapHuespedes(Set<Huesped> huespedes)
 	{
 		Set<HuespedDTO> huespedesDTO = new HashSet<HuespedDTO>();
 		
@@ -137,6 +147,6 @@ public class DTO
 			huespedesDTO.add(this.map(huesped));
 		}
 		
-		return huespedesDTO;
+		return huespedesDTO.toArray(new HuespedDTO[0]);
 	}
 }
