@@ -22,14 +22,20 @@ public class SRController implements IAltaClienteController, ICadenaController, 
 	private Reserva reserva;
 	private CadenaHotelera cadenaHotelera;
 	
-	public SRController(CadenaHotelera ch) {
+	public SRController(CadenaHotelera ch, Reserva res, Cliente cl) {
 		this.cadenaHotelera = ch;
+		this.reserva = res;
+		this.cliente= cl;
 	}
 
 	@Override
 	public ClienteDTO registrarCliente(String rut, String nombre, String direccion, String telefono, String mail) {
-		Cliente cliente = this.cadenaHotelera.registrarCliente(rut, nombre, direccion, telefono, mail);
-		return DTO.getInstance().map(cliente);
+		try {			
+			Cliente cliente = this.cadenaHotelera.registrarCliente(rut, nombre, direccion, telefono, mail);
+			return DTO.getInstance().map(cliente);
+		} catch(Exception e) {
+			return null;
+		}
 	}
 
 	@Override
@@ -46,20 +52,20 @@ public class SRController implements IAltaClienteController, ICadenaController, 
 
 	@Override
 	public ReservaDTO registrarHuesped(String nombre, String documento) throws Exception {
-		Reserva reserva = this.cadenaHotelera.registrarHuesped(reserva, nombre, documento);
+		Reserva reserva = this.cadenaHotelera.registrarHuesped(this.reserva, nombre, documento);
 		return DTO.getInstance().map(reserva);
 	}
 
 	@Override
 	public ReservaDTO tomarReserva() throws Exception {
-		Reserva reserva = this.cadenaHotelera.tomarReserva(reserva);
+		Reserva reserva = this.cadenaHotelera.tomarReserva(this.reserva);
 		return DTO.getInstance().map(reserva);
 	}
 
 	@Override
 	public ReservaDTO modificarReserva(String nombreHotel, String nombreTipoHabitacion, GregorianCalendar fechaInicio,
 			GregorianCalendar fechaFin, boolean modificablePorHuesped) throws Exception {
-		Reserva reserva = this.cadenaHotelera.modificarReserva(reserva, cliente, nombreHotel, nombreTipoHabitacion, fechaInicio, fechaFin, modificablePorHuesped);
+		Reserva reserva = this.cadenaHotelera.modificarReserva(this.reserva, cliente, nombreHotel, nombreTipoHabitacion, fechaInicio, fechaFin, modificablePorHuesped);
 		return DTO.getInstance().map(reserva);
 	}
 
@@ -101,11 +107,12 @@ public class SRController implements IAltaClienteController, ICadenaController, 
 		return DTO.getInstance().mapHoteles(hoteles);
 	}
 
+	/*
 	@Override
 	public ReservaDTO cancelarReservaDelCliente() throws Exception {
 		Reserva reservaCancelada = this.cadenaHotelera.cancelarReservaDelCliente(reserva); 
 		return DTO.getInstance().map(reservaCancelada);
-	}
+	}*/
 
 	/**
 	 * Ninguno de estos están diseñados, pero tiene sentido que lo haga la cadena hotelera,

@@ -1,5 +1,6 @@
 package org.tds.sgh.business;
 
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -33,7 +34,7 @@ public class CadenaHotelera
 	
 	// --------------------------------------------------------------------------------------------
 	
-	public Cliente agregarCliente(
+	public Cliente registrarCliente(
 		String rut,
 		String nombre,
 		String direccion,
@@ -80,82 +81,7 @@ public class CadenaHotelera
 		return tipoHabitacion;
 	}
 	
-	public Cliente buscarCliente(String rut) throws Exception
-	{
-		Cliente cliente = this.clientes.get(rut);
-		
-		if (cliente == null)
-		{
-			throw new Exception("No existe un cliente con el nombre indicado.");
-		}
-		
-		return cliente;
-	}
-	
-	public Set<Cliente> seleccionarCliente(String rut)
-	{
-		return null;
-		
-	}
-	
-	public Set<Boolean> confirmarDisponibilidad(String nombreHotel , String nombreTipoHabitación, Date fechainicio, Date fechafin)
-	{
-		return true;
-	}
-	
-	public Set<Reserva> registrarReserva(Cliente cliente, String nombreHotel, String nombreTipoHotel, Date fechaInicial, Date fechaFinal, Boolean modificadoPorHuesped)
-	{
-		
-	}
-	
-	public Set <List<Hotel>> sugerirAlternativas(String pais, String nombreTipoHotel, Date fechaInicial, Date fechaFinal)
-	{
-		
-	}
-	
-	public Set<List<Reserva>> buscarReservaDelCliente(Cliente clienteSeleccionado)
-	{
-		
-	}
-	
-	public Set<Reserva> seleccionarReserva(String codigo)
-	{
-		return null;
-		
-	}
-	
-	public Set<Reserva> modificarReserva(Reserva reserva, Cliente cliente, String nombreHotel, String nombreTipoHotel, Date fechaInicial, Date fechaFinal, Boolean modificadoPorHuesped)
-	{
-		
-	}
-	
-	public Set<Reserva> buscarReservasPendientes(String nombreHotel)
-	{
-		return null;
-		
-	}
-	
-	public Set<Reserva> buscarReserva(String codigoReserva)
-	{
-		return null;	
-	}
-	
-	public Set<Reserva> registrarHuesped(Reserva reserva, String nombre, String documento)
-	{
-		return null;
-	}
-	
-	public Set<Reserva> tomarReserva(Reserva reserva)
-	{
-		return null;
-	}
-	
-	public Set<Reserva> buscarReservasDelCliente(Cliente clienteSeleccionado)
-	{
-		
-	}
-	
-	public Set<Cliente> buscarClientes(String patronNombreCliente)
+	public Set<Cliente> buscarCliente(String patronNombreCliente)
 	{
 		Set<Cliente> clientesEncontrados = new HashSet<Cliente>();
 		
@@ -168,6 +94,76 @@ public class CadenaHotelera
 		}
 		
 		return clientesEncontrados;
+	}
+	
+	public Cliente seleccionarCliente(String rut) throws Exception
+	{
+		Cliente cliente = this.clientes.get(rut);
+		
+		if (cliente == null)
+		{
+			throw new Exception("No existe un cliente con el nombre indicado.");
+		}
+		
+		return cliente;
+		
+	}
+	
+	public Boolean confirmarDisponibilidad(String nombreHotel , String nombreTipoHabitación, GregorianCalendar fechainicio, GregorianCalendar fechafin)
+	{
+		return true;
+	}
+	
+	public Reserva registrarReserva(Cliente cliente, String nombreHotel, String nombreTipoHotel, GregorianCalendar fechaInicial, GregorianCalendar fechaFinal, Boolean modificadoPorHuesped)
+	{
+		return null;
+	}
+	
+	public Set <Hotel> sugerirAlternativas(String pais, String nombreTipoHotel, GregorianCalendar fechaInicial, GregorianCalendar fechaFinal)
+	{
+		return null;
+	}
+	
+	public Set<Reserva> buscarReservaDelCliente(Cliente clienteSeleccionado)
+	{
+		return null;
+	}
+	
+	public Reserva seleccionarReserva(Long codigo)
+	{
+		return null;
+		
+	}
+	
+	public Reserva modificarReserva(Reserva reserva, Cliente cliente, String nombreHotel, String nombreTipoHotel, GregorianCalendar fechaInicial, GregorianCalendar fechaFinal, Boolean modificadoPorHuesped)
+	{
+		return null;
+	}
+	
+	public Set<Reserva> buscarReservasPendientes(String nombreHotel)
+	{
+		return null;
+		
+	}
+	
+	public Reserva buscarReserva(String codigoReserva)
+	{
+		return null;	
+	}
+	
+	public Reserva registrarHuesped(Reserva reserva, String nombre, String documento)
+	{
+		return null;
+	}
+	
+	public Reserva tomarReserva(Reserva reserva)
+	{
+		return null;
+	}
+	
+	public Set<Reserva> buscarReservasDelCliente(Cliente clienteSeleccionado)
+	{
+		return null;
 	}
 	
 	public Hotel buscarHotel(String nombre) throws Exception
