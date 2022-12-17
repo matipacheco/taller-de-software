@@ -1,5 +1,6 @@
 package org.tds.sgh.business;
 
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -41,6 +42,42 @@ public class Hotel
 		this.habitaciones.put(habitacion.getNombre(), habitacion);
 		
 		return habitacion;
+	}
+	
+	public boolean confirmarDisponibilidad(String nombreTipoHabitacion, Date fechainicio, Date fechafin)
+	{
+		return true;
+	}
+	
+	public Set<Reserva> buscarReserva(String codigoReserva)
+	{
+		return null;
+		
+	}
+	
+	public Set<Reserva> crearReserva(TipoHabitacion tipoHab, Cliente cliente, Date fechainicio, Date fechafin, Boolean modificadoPorHuesped)
+	{
+		return null;
+	}
+	
+	public void quitarReserva(Reserva reserva)
+	{
+		
+	}
+	
+	public void agregarReserva(Reserva reserva)
+	{
+		
+	}
+	
+	public Set<List<Reserva>> buscarReservasPendientes()
+	{
+		
+	}
+	
+	public Set<List<Habitacion>> getHabitaciones()
+	{
+		
 	}
 	
 	public String getNombre()
