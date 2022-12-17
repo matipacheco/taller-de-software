@@ -6,8 +6,10 @@ import java.util.Set;
 //amarillo
 import org.tds.sgh.business.CadenaHotelera;
 import org.tds.sgh.business.Cliente;
+import org.tds.sgh.business.Hotel;
 import org.tds.sgh.business.Reserva;
 import org.tds.sgh.dtos.ClienteDTO;
+import org.tds.sgh.dtos.DTO;
 import org.tds.sgh.dtos.HabitacionDTO;
 import org.tds.sgh.dtos.HotelDTO;
 import org.tds.sgh.dtos.ReservaDTO;
@@ -17,7 +19,7 @@ import org.tds.sgh.infrastructure.Infrastructure;
 public class SRController implements IAltaClienteController, ICadenaController, ICancelarReservaController, IHacerReservaController, IIdentificarClienteEnRecepcionController, IIdentificarReservaClienteController, IModificarReservaController, ITomarReservaController  {
 	
 	private Cliente cliente;
-	private Reserva reserva; 
+	private Reserva reserva;
 	private CadenaHotelera cadenaHotelera;
 	
 	public SRController(CadenaHotelera ch) {
@@ -26,84 +28,83 @@ public class SRController implements IAltaClienteController, ICadenaController, 
 
 	@Override
 	public ClienteDTO registrarCliente(String rut, String nombre, String direccion, String telefono, String mail) {
-		// this.cadenaHotelera.registrarCliente(rut, nombre, direccion, telefono, mail);
-		return null;
+		Cliente cliente = this.cadenaHotelera.registrarCliente(rut, nombre, direccion, telefono, mail);
+		return DTO.getInstance().map(cliente);
 	}
 
 	@Override
 	public Set<ReservaDTO> buscarReservasPendientes(String nombreHotel) throws Exception {
-		// this.cadenaHotelera.buscarReservasPendientes(nombreHotel);
-		return null;
+		Set<Reserva> reservasPendientes = this.cadenaHotelera.buscarReservasPendientes(nombreHotel);
+		return DTO.getInstance().mapReservas(reservasPendientes);
 	}
 
 	@Override
 	public ReservaDTO seleccionarReserva(long codigoReserva) throws Exception {
-		// this.cadenaHotelera.seleccionarReserva(codigoReserva);
-		return null;
+		Reserva reserva = this.cadenaHotelera.seleccionarReserva(codigoReserva);
+		return DTO.getInstance().map(reserva);
 	}
 
 	@Override
 	public ReservaDTO registrarHuesped(String nombre, String documento) throws Exception {
-		// this.cadenaHotelera.registrarHuesped(reserva, nombre, documento);
-		return null;
+		Reserva reserva = this.cadenaHotelera.registrarHuesped(reserva, nombre, documento);
+		return DTO.getInstance().map(reserva);
 	}
 
 	@Override
 	public ReservaDTO tomarReserva() throws Exception {
-		// this.cadenaHotelera.tomarReserva(reserva);
-		return null;
+		Reserva reserva = this.cadenaHotelera.tomarReserva(reserva);
+		return DTO.getInstance().map(reserva);
 	}
 
 	@Override
 	public ReservaDTO modificarReserva(String nombreHotel, String nombreTipoHabitacion, GregorianCalendar fechaInicio,
 			GregorianCalendar fechaFin, boolean modificablePorHuesped) throws Exception {
-		// this.cadenaHotelera.modificarReserva(reserva, cliente, nombreHotel, nombreTipoHabitacion, fechaInicio, fechaFin, modificablePorHuesped);
-		return null;
+		Reserva reserva = this.cadenaHotelera.modificarReserva(reserva, cliente, nombreHotel, nombreTipoHabitacion, fechaInicio, fechaFin, modificablePorHuesped);
+		return DTO.getInstance().map(reserva);
 	}
 
 	@Override
 	public Set<ReservaDTO> buscarReservasDelCliente() throws Exception {
-		// this.cadenaHotelera.buscarReservasDelCliente(cliente);
-		return null;
+		Set<Reserva> reservasCliente = this.cadenaHotelera.buscarReservasDelCliente(cliente);
+		return DTO.getInstance().mapReservas(reservasCliente);
 	}
 
 	@Override
 	public Set<ClienteDTO> buscarCliente(String patronNombreCliente) {
-		// this.cadenaHotelera.buscarCliente(patronNombreCliente);
-		return null;
+		Set<Cliente> clientes = this.cadenaHotelera.buscarCliente(patronNombreCliente);
+		return DTO.getInstance().mapClientes(clientes);
 	}
 
 	@Override
 	public ClienteDTO seleccionarCliente(String rut) throws Exception {
-		// this.cadenaHotelera.seleccionarCliente(rut);
-		return null;
+		Cliente clientes = this.cadenaHotelera.seleccionarCliente(rut);
+		return DTO.getInstance().map(cliente);
 	}
 
 	@Override
 	public boolean confirmarDisponibilidad(String nombreHotel, String nombreTipoHabitacion,
 			GregorianCalendar fechaInicio, GregorianCalendar fechaFin) throws Exception {
-		// this.cadenaHotelera.confirmarDisponibilidad(nombreHotel, nombreTipoHabitacion, fechaInicio, fechaFin);
-		return false;
+		return this.cadenaHotelera.confirmarDisponibilidad(nombreHotel, nombreTipoHabitacion, fechaInicio, fechaFin);
 	}
 
 	@Override
 	public ReservaDTO registrarReserva(String nombreHotel, String nombreTipoHabitacion, GregorianCalendar fechaInicio,
 			GregorianCalendar fechaFin, boolean modificablePorHuesped) throws Exception {
-		// this.cadenaHotelera.registrarReserva(cliente, nombreHotel, nombreTipoHabitacion, fechaInicio, fechaFin, modificablePorHuesped);
-		return null;
+		Reserva reserva = this.cadenaHotelera.registrarReserva(cliente, nombreHotel, nombreTipoHabitacion, fechaInicio, fechaFin, modificablePorHuesped);
+		return DTO.getInstance().map(reserva);
 	}
 
 	@Override
 	public Set<HotelDTO> sugerirAlternativas(String pais, String nombreTipoHabitacion, GregorianCalendar fechaInicio,
 			GregorianCalendar fechaFin) throws Exception {
-		// this.cadenaHotelera.sugerirAlternativas(pais, nombreTipoHabitacion, fechaInicio, fechaFin);
-		return null;
+		Set<Hotel> hoteles = this.cadenaHotelera.sugerirAlternativas(pais, nombreTipoHabitacion, fechaInicio, fechaFin);
+		return DTO.getInstance().mapHoteles(hoteles);
 	}
 
 	@Override
 	public ReservaDTO cancelarReservaDelCliente() throws Exception {
-		// this.cadenaHotelera.cancelarReservaDelCliente(reserva); 
-		return null;
+		Reserva reservaCancelada = this.cadenaHotelera.cancelarReservaDelCliente(reserva); 
+		return DTO.getInstance().map(reservaCancelada);
 	}
 
 	/**

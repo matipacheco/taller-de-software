@@ -1,7 +1,6 @@
 package org.tds.sgh.system;
 
 import org.tds.sgh.business.CadenaHotelera;
-import org.tds.sgh.infrastructure.NotImplementedException;
 
 
 public class ControllerFactory implements IControllerFactory

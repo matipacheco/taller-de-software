@@ -1,11 +1,13 @@
 package org.tds.sgh.dtos;
 
+import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.tds.sgh.business.Cliente;
 import org.tds.sgh.business.Habitacion;
 import org.tds.sgh.business.Hotel;
+import org.tds.sgh.business.Reserva;
 import org.tds.sgh.business.TipoHabitacion;
 
 
@@ -55,6 +57,11 @@ public class DTO
 		return new TipoHabitacionDTO(tipoHabitation.getNombre());
 	}
 	
+	public ReservaDTO map(Reserva reserva)
+	{
+		return new ReservaDTO(reserva.getCodigo(), reserva.rutCliente(), reserva.getHotel(), reserva.getTipoHabitacion(), reserva.getFechaInicio(), reserva.getFechaFin(), reserva.getModificablePorHuesped, reserva.getEstado(), reserva.getHabitacion()) ; //, HuespedDTO... huespedes);
+	}
+
 	public Set<ClienteDTO> mapClientes(Set<Cliente> clientes)
 	{
 		Set<ClienteDTO> clientesDTO = new HashSet<ClienteDTO>();
@@ -66,7 +73,7 @@ public class DTO
 		
 		return clientesDTO;
 	}
-	
+
 	public Set<HabitacionDTO> mapHabitaciones(Hotel hotel, Set<Habitacion> habitaciones)
 	{
 		Set<HabitacionDTO> habitacionesDTO = new HashSet<HabitacionDTO>();
@@ -78,7 +85,7 @@ public class DTO
 		
 		return habitacionesDTO;
 	}
-	
+
 	public Set<HotelDTO> mapHoteles(Set<Hotel> hoteles)
 	{
 		Set<HotelDTO> hotelesDTO = new HashSet<HotelDTO>();
@@ -90,7 +97,7 @@ public class DTO
 		
 		return hotelesDTO;
 	}
-	
+
 	public Set<TipoHabitacionDTO> mapTiposHabitacion(Set<TipoHabitacion> tiposHabitacion)
 	{
 		Set<TipoHabitacionDTO> tiposHabitacionDTO = new HashSet<TipoHabitacionDTO>();
@@ -101,5 +108,17 @@ public class DTO
 		}
 		
 		return tiposHabitacionDTO;
+	}
+
+	public Set<ReservaDTO> mapReservas(Set<Reserva> reservas)
+	{
+		Set<ReservaDTO> reservasDTO = new HashSet<ReservaDTO>();
+		
+		for (Reserva reserva : reservas)
+		{
+			reservasDTO.add(this.map(reserva));
+		}
+		
+		return reservasDTO;
 	}
 }
