@@ -84,12 +84,8 @@ public class CadenaHotelera
 		return tipoHabitacion;
 	}
 	
-	public Habitacion agregarHabitacion(Hotel hotel, TipoHabitacion tipoHabitacion, String nombre ) {
-		try {
-			return hotel.agregarHabitacion(tipoHabitacion, nombre);
-		} catch (Exception e) {
-			return null;
-		}
+	public Habitacion agregarHabitacion(Hotel hotel, TipoHabitacion tipoHabitacion, String nombre ) throws Exception {
+		return hotel.agregarHabitacion(tipoHabitacion, nombre);
 	}
 	
 	// CASO DE USO 8 - BUSCAR CLIENTE
@@ -265,13 +261,9 @@ public class CadenaHotelera
 		return new HashSet<TipoHabitacion>(this.tiposHabitacion.values());
 	}
 	
-	public Set<Habitacion> listarHabitaciones(String nombreHotel) {
-		try {			
-			Hotel hotel = this.buscarHotel(nombreHotel);
-			return hotel.listarHabitaciones();
-		} catch (Exception e) {
-			return null;
-		}
+	public Set<Habitacion> listarHabitaciones(String nombreHotel) throws Exception {			
+		Hotel hotel = this.buscarHotel(nombreHotel);
+		return hotel.listarHabitaciones();
 	}
 	
 	public Reserva cancelarReservaDelCliente(Reserva reserva) {

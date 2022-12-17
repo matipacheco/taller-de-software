@@ -1,15 +1,9 @@
 package org.tds.sgh.business;
-import java.util.GregorianCalendar;
 
 public class Huesped {
 	private String nombre;
 	
 	private String documento;
-	
-	private GregorianCalendar fechaInicio;
-	
-	private GregorianCalendar fechaFin;
-
 
 	public Huesped(String nombre, String documento) {
 		this.nombre = nombre;

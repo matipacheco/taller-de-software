@@ -3,7 +3,6 @@ package org.tds.sgh.system;
 import java.util.GregorianCalendar;
 import java.util.Set;
 
-//amarillo
 import org.tds.sgh.business.CadenaHotelera;
 import org.tds.sgh.business.Cliente;
 import org.tds.sgh.business.Habitacion;
@@ -16,7 +15,6 @@ import org.tds.sgh.dtos.HabitacionDTO;
 import org.tds.sgh.dtos.HotelDTO;
 import org.tds.sgh.dtos.ReservaDTO;
 import org.tds.sgh.dtos.TipoHabitacionDTO;
-import org.tds.sgh.infrastructure.Infrastructure;
 
 public class SRController implements IAltaClienteController, ICadenaController, ICancelarReservaController, IHacerReservaController, IIdentificarClienteEnRecepcionController, IIdentificarReservaClienteController, IModificarReservaController, ITomarReservaController  {
 	
@@ -29,15 +27,11 @@ public class SRController implements IAltaClienteController, ICadenaController, 
 	}
 
 	@Override
-	public ClienteDTO registrarCliente(String rut, String nombre, String direccion, String telefono, String mail) {
-		try {			
-			Cliente clienteCreado = this.cadenaHotelera.registrarCliente(rut, nombre, direccion, telefono, mail);
-			cliente = clienteCreado;
+	public ClienteDTO registrarCliente(String rut, String nombre, String direccion, String telefono, String mail) throws Exception {			
+		Cliente clienteCreado = this.cadenaHotelera.registrarCliente(rut, nombre, direccion, telefono, mail);
+		cliente = clienteCreado;
 
-			return DTO.getInstance().map(clienteCreado);
-		} catch(Exception e) {
-			return null;
-		}
+		return DTO.getInstance().map(clienteCreado);
 	}
 
 	@Override
