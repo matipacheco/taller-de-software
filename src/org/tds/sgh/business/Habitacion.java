@@ -8,6 +8,7 @@ public class Habitacion
 	
 	private TipoHabitacion tipoHabitacion;
 	
+	private Reserva reserva;
 	// --------------------------------------------------------------------------------------------
 	
 	public Habitacion(TipoHabitacion tipoHabitacion, String nombre)
