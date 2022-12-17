@@ -33,7 +33,7 @@ public class CadenaHotelera
 	}
 	
 	// --------------------------------------------------------------------------------------------
-	
+	// CU ALTA CLIENTE
 	public Cliente registrarCliente(
 		String rut,
 		String nombre,
@@ -81,6 +81,7 @@ public class CadenaHotelera
 		return tipoHabitacion;
 	}
 	
+	// CASO DE USO 8 - BUSCAR CLIENTE
 	public Set<Cliente> buscarCliente(String patronNombreCliente)
 	{
 		Set<Cliente> clientesEncontrados = new HashSet<Cliente>();
@@ -96,6 +97,7 @@ public class CadenaHotelera
 		return clientesEncontrados;
 	}
 	
+	// CU8 seleccionarCliente
 	public Cliente seleccionarCliente(String rut) throws Exception
 	{
 		Cliente cliente = this.clientes.get(rut);
@@ -114,14 +116,35 @@ public class CadenaHotelera
 		return true;
 	}
 	
-	public Reserva registrarReserva(Cliente cliente, String nombreHotel, String nombreTipoHotel, GregorianCalendar fechaInicial, GregorianCalendar fechaFinal, Boolean modificadoPorHuesped)
+	public Reserva registrarReserva(Cliente cliente, String nombreHotel, String nombreTipoHabitacion, GregorianCalendar fechaInicial, GregorianCalendar fechaFinal, Boolean modificablePorHuesped)
 	{
+		// 1 buscar hotel con nombre hotel
+		// 2 buscar tipo hab con nombre nombreTipoHabitacion
+		// 3 hotel.crear reserva ()
+		// 4 reserva.crear() (reemplazo por un new())
+		// 5 agregar la reserva a la collectino de reservas del hotel
+		// 6 enviar el correo
+		
+		Hotel hotel = hoteles.get(nombreHotel);
+		TipoHabitacion tipoHabitacion = tiposHabitacion.get(nombreTipoHabitacion);
+		Reserva reservaCreada = hotel.crearReserva(tipoHabitacion, cliente, fechaInicial, fechaFinal, modificablePorHuesped);
 		return null;
 	}
 	
-	public Set <Hotel> sugerirAlternativas(String pais, String nombreTipoHotel, GregorianCalendar fechaInicial, GregorianCalendar fechaFinal)
+	public Set<Hotel> sugerirAlternativas(String pais, String nombreTipoHabitacion, GregorianCalendar fechaInicial, GregorianCalendar fechaFinal)
 	{
-		return null;
+		Set<Hotel> alternativas = new HashSet<Hotel>();
+
+		for (Hotel hotel : hoteles.values())
+		{
+			if (pais == hotel.getPais()) {
+				if (confirmarDisponibilidad(hotel.getNombre(), nombreTipoHabitacion, fechaInicial, fechaFinal)) {
+					alternativas.add(hotel);
+				}
+			}
+		}
+		
+		return alternativas;
 	}
 	
 	public Set<Reserva> buscarReservaDelCliente(Cliente clienteSeleccionado)
@@ -135,7 +158,7 @@ public class CadenaHotelera
 		
 	}
 	
-	public Reserva modificarReserva(Reserva reserva, Cliente cliente, String nombreHotel, String nombreTipoHotel, GregorianCalendar fechaInicial, GregorianCalendar fechaFinal, Boolean modificadoPorHuesped)
+	public Reserva modificarReserva(Reserva reserva, Cliente cliente, String nombreHotel, String nombreTipoHabitacion, GregorianCalendar fechaInicial, GregorianCalendar fechaFinal, Boolean modificadoPorHuesped)
 	{
 		return null;
 	}

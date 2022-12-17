@@ -7,6 +7,7 @@ import java.util.Set;
 import org.tds.sgh.business.Cliente;
 import org.tds.sgh.business.Habitacion;
 import org.tds.sgh.business.Hotel;
+import org.tds.sgh.business.Huesped;
 import org.tds.sgh.business.Reserva;
 import org.tds.sgh.business.TipoHabitacion;
 
@@ -57,9 +58,14 @@ public class DTO
 		return new TipoHabitacionDTO(tipoHabitation.getNombre());
 	}
 	
+	public HuespedDTO map(Huesped huesped) {
+		return new HuespedDTO(huesped.getNombre(), huesped.getDocumento());
+	}
+	
 	public ReservaDTO map(Reserva reserva)
 	{
-		return new ReservaDTO(reserva.getCodigo(), reserva.rutCliente(), reserva.getHotel(), reserva.getTipoHabitacion(), reserva.getFechaInicio(), reserva.getFechaFin(), reserva.getModificablePorHuesped, reserva.getEstado(), reserva.getHabitacion()) ; //, HuespedDTO... huespedes);
+		// return new ReservaDTO(reserva.getCodigo(), reserva.rutCliente(), reserva.getHotel(), reserva.getTipoHabitacion(), reserva.getFechaInicio(), reserva.getFechaFin(), reserva.getModificablePorHuesped(), reserva.getEstado(), "reserva.getHabitacion()", this.mapHuespedes(reserva.getHuespedes()));
+		return null;
 	}
 
 	public Set<ClienteDTO> mapClientes(Set<Cliente> clientes)
@@ -120,5 +126,17 @@ public class DTO
 		}
 		
 		return reservasDTO;
+	}
+	
+	public Set<HuespedDTO> mapHuespedes(Set<Huesped> huespedes)
+	{
+		Set<HuespedDTO> huespedesDTO = new HashSet<HuespedDTO>();
+		
+		for (Huesped huesped: huespedes)
+		{
+			huespedesDTO.add(this.map(huesped));
+		}
+		
+		return huespedesDTO;
 	}
 }

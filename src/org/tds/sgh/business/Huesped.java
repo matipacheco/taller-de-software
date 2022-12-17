@@ -1,23 +1,28 @@
 package org.tds.sgh.business;
-
-import java.sql.Date;
-import java.util.Map;
+import java.util.GregorianCalendar;
 
 public class Huesped {
+	private String nombre;
+	
+	private String documento;
+	
+	private GregorianCalendar fechaInicio;
+	
+	private GregorianCalendar fechaFin;
 
-import java.sql.Date;
-import java.util.Map;
 
-public class Huesped {
-	// --------------------------------------------------------------------------------------------
-		
-		private String nombre;
-		
-		private String documento;
-		
-		private Date fechaInicio;
-		
-		private Date fechaFin;
-		
-		// --------------------------------------------------------------------------------------------
+	public Huesped(String nombre, String documento) {
+		this.nombre = nombre;
+		this.documento = documento;
+	}
+
+	public String getNombre() {
+		return this.nombre;
+	}
+
+	public String getDocumento() {
+		return this.documento;
+	}
+
+
 }

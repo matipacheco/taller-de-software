@@ -1,10 +1,14 @@
 package org.tds.sgh.business;
 
 import java.util.GregorianCalendar;
+import java.util.Set;
+
+import org.tds.sgh.infrastructure.Infrastructure;
 
 //amarillo
 public class Reserva {
 
+	private String estado;
 	private int codigo;
 	private GregorianCalendar fechaInicio;
 	private GregorianCalendar fechaFin;
@@ -12,9 +16,19 @@ public class Reserva {
 	private Cliente cliente;
 	private TipoHabitacion tipoHabitacion;
 	private Hotel hotel;
+	private Set<Huesped> huespedes;
+
+	private enum Estado {
+  	
+	}
 	
-	public Reserva() {
-		
+	public Reserva (TipoHabitacion tipoHabitacion, Cliente cliente, GregorianCalendar fechaInicio, GregorianCalendar fechaFin, boolean mph, Hotel hotel) {
+		this.tipoHabitacion = tipoHabitacion;
+		this.cliente = cliente;
+		this.fechaInicio = fechaInicio;
+		this.fechaFin = fechaFin;
+		this.modificablePorHuesped = mph;
+		this.hotel = hotel;
 	}
 	
 	public boolean coincide(String nombreTipoHabitacion, GregorianCalendar fechaInicio, GregorianCalendar fechaFin) {
@@ -24,22 +38,23 @@ public class Reserva {
 		return true;
 	}
 	
-	public Reserva create(TipoHabitacion tipoHabitacion, Cliente cliente, GregorianCalendar fechaInicio, GregorianCalendar fechaFin, boolean mph, Hotel hotel) {
-		
-		
-		//no implementado
-		return new Reserva();
-	}
-	
-	public Reserva update(String nombreTipoHabitacion, GregorianCalendar fechaInicio, GregorianCalendar fechaFin, boolean mph, Hotel hotel) {
-		
-		
+	public Reserva update(String nombreTipoHabitacion, GregorianCalendar fechaInicio, GregorianCalendar fechaFin, boolean mph, Hotel hotel) {		
 		//not implemented
-		return new Reserva();
+		// return new Reserva();
+		return null;
 	}
 	
-	public void enviarMail(String destinatario, String asunto, String mensaje) {
-		//no implementado
+	public void enviarMail(String evento) {
+		String asunto = "", mensaje = "";
+		String destinatario = this.cliente.getMail();
+
+		switch(evento) {
+		case "reservaCreada":
+			asunto = "Reserva creada exitosamente";
+			mensaje = "Holi";
+		}
+		
+		Infrastructure.getInstance().getSistemaMensajeria().enviarMail(destinatario, asunto, mensaje);
 	}
 	
 	public boolean esDelCliente(Cliente clienteSeleccionado) {
@@ -91,6 +106,24 @@ public class Reserva {
 		return fechaFin;
 	}
 	
+	public String rutCliente() {
+		return this.cliente.getRut();
+	}
 	
+	public String getTipoHabitacion() {
+		return this.tipoHabitacion.getNombre();
+	}
+	
+	public String getEstado(){
+		return this.estado;
+	}
+	
+	public Boolean getModificablePorHuesped() {
+		return modificablePorHuesped; 
+	}
+	
+	public Set<Huesped> getHuespedes(){
+		return this.huespedes;
+	}
 	
 }

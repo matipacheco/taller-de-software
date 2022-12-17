@@ -1,6 +1,6 @@
 package org.tds.sgh.business;
 
-import java.sql.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -10,13 +10,11 @@ import java.util.Set;
 public class Hotel
 {
 	// --------------------------------------------------------------------------------------------
-	
-	private Map<String, Habitacion> habitaciones;
-	
+	private String pais;
 	private String nombre;
 	
-	private String pais;
-	
+	private Set<Reserva> reservas;
+	private Map<String, Habitacion> habitaciones;
 	// --------------------------------------------------------------------------------------------
 	
 	public Hotel(String nombre, String pais)
@@ -26,6 +24,7 @@ public class Hotel
 		this.nombre = nombre;
 		
 		this.pais = pais;
+		this.reservas = new HashSet<Reserva>();
 	}
 	
 	// --------------------------------------------------------------------------------------------
@@ -44,20 +43,26 @@ public class Hotel
 		return habitacion;
 	}
 	
-	public boolean confirmarDisponibilidad(String nombreTipoHabitacion, Date fechainicio, Date fechafin)
+	public boolean confirmarDisponibilidad(String nombreTipoHabitacion, GregorianCalendar fechainicio, GregorianCalendar fechafin)
 	{
+		int CantHabs;
+		
 		return true;
 	}
 	
-	public Set<Reserva> buscarReserva(String codigoReserva)
+	public Reserva buscarReserva(String codigoReserva)
 	{
-		return null;
-		
+		return null;	
 	}
 	
-	public Set<Reserva> crearReserva(TipoHabitacion tipoHab, Cliente cliente, Date fechainicio, Date fechafin, Boolean modificadoPorHuesped)
+	
+	public Reserva crearReserva(TipoHabitacion tipoHab, Cliente cliente, GregorianCalendar fechainicio, GregorianCalendar fechafin, Boolean modificablePorHuesped)
 	{
-		return null;
+		Reserva reservaCreada = new Reserva(tipoHab, cliente, fechainicio, fechafin, modificablePorHuesped, this);
+		reservaCreada.enviarMail("reservaCreada");
+		this.reservas.add(reservaCreada);
+
+		return reservaCreada;
 	}
 	
 	public void quitarReserva(Reserva reserva)
@@ -70,14 +75,14 @@ public class Hotel
 		
 	}
 	
-	public Set<List<Reserva>> buscarReservasPendientes()
+	public Set<Reserva> buscarReservasPendientes()
 	{
-		
+		return null;
 	}
 	
-	public Set<List<Habitacion>> getHabitaciones()
+	public Set<Habitacion> getHabitaciones()
 	{
-		
+		return null;
 	}
 	
 	public String getNombre()

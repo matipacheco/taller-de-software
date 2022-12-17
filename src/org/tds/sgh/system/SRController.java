@@ -22,6 +22,10 @@ public class SRController implements IAltaClienteController, ICadenaController, 
 	private Reserva reserva;
 	private CadenaHotelera cadenaHotelera;
 	
+	public SRController(CadenaHotelera ch) {
+		this.cadenaHotelera = ch;
+	}
+	
 	public SRController(CadenaHotelera ch, Reserva res, Cliente cl) {
 		this.cadenaHotelera = ch;
 		this.reserva = res;
@@ -166,6 +170,12 @@ public class SRController implements IAltaClienteController, ICadenaController, 
 
 	@Override
 	public Set<TipoHabitacionDTO> getTiposHabitacion() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ReservaDTO cancelarReservaDelCliente() throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
