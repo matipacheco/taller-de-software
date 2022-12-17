@@ -9,6 +9,9 @@ public class Reserva {
 	private GregorianCalendar fechaInicio;
 	private GregorianCalendar fechaFin;
 	private boolean modificablePorHuesped;
+	private Cliente cliente;
+	private TipoHabitacion tipoHabitacion;
+	private Hotel hotel;
 	
 	public Reserva() {
 		
@@ -34,5 +37,60 @@ public class Reserva {
 		//not implemented
 		return new Reserva();
 	}
+	
+	public void enviarMail(String destinatario, String asunto, String mensaje) {
+		//no implementado
+	}
+	
+	public boolean esDelCliente(Cliente clienteSeleccionado) {
+		
+		//no implementado
+		return false;
+	}
+	
+	public boolean estaPendiente() {
+		
+		//no implementado
+		return false;
+	}
+	
+	public void agregarHuesped(String nombre, String documento) {
+		
+		//no implementado
+	}
+	
+	public Reserva tomarReserva() {
+		
+		//no implementado
+		return this;
+	}
+	
+	public boolean reservaPendienteEnRango(String nombreTipoHabitacion, GregorianCalendar fechaInicio, GregorianCalendar fechaFin) {
+		
+		//no implementado
+		return false;
+	}
+	
+	public Hotel getHotel() {
+		return hotel;
+	}
+	
+	public TipoHabitacion getTipo() {
+		return tipoHabitacion;
+	}
+	
+	public int getCodigo() {
+		return codigo;
+	}
+	
+	public GregorianCalendar getFechaInicio() {
+		return fechaInicio;
+	}
+	
+	public GregorianCalendar getFechaFin() {
+		return fechaFin;
+	}
+	
+	
 	
 }
