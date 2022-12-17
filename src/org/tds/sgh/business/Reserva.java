@@ -1,6 +1,7 @@
 package org.tds.sgh.business;
 
 import java.util.GregorianCalendar;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.tds.sgh.infrastructure.Infrastructure;
@@ -24,7 +25,7 @@ public class Reserva {
 	private TipoHabitacion tipoHabitacion;
 	private Hotel hotel;
 	private Set<Huesped> huespedes;
-
+	private Habitacion habitacion;
 	
 	
 	public Reserva (TipoHabitacion tipoHabitacion, Cliente cliente, GregorianCalendar fechaInicio, GregorianCalendar fechaFin, boolean mph, Hotel hotel) {
@@ -35,6 +36,8 @@ public class Reserva {
 		this.modificablePorHuesped = mph;
 		this.hotel = hotel;
 		this.estado = Estado.Pendiente;
+		this.huespedes = new HashSet<Huesped>();
+		this.habitacion = null;
 	}
 	
 	public boolean coincide(String nombreTipoHabitacion, GregorianCalendar fechaInicio, GregorianCalendar fechaFin) {
@@ -65,9 +68,7 @@ public class Reserva {
 	}
 	
 	public boolean esDelCliente(Cliente clienteSeleccionado) {
-		
-		//no implementado
-		return false;
+		return cliente.getRut() == clienteSeleccionado.getRut();
 	}
 
 	public boolean estaPendiente() {
@@ -81,15 +82,19 @@ public class Reserva {
 	}
 	
 	public Reserva tomarReserva() {
+		Habitacion habitacionAsignada = null;
 		Set<Habitacion> habitacionesHotel = hotel.listarHabitaciones();
 
 		for (Habitacion habitacion : habitacionesHotel) {
 			if (habitacion.esDeTipo(this.tipoHabitacion.getNombre()) && !habitacion.asignada()) {
 				habitacion.asignarReserva(this);
+				habitacionAsignada = habitacion;
 				break;
 			}
 		}
 		
+		
+		this.habitacion = habitacionAsignada;
 		this.estado = Estado.Tomada;		
 		return this;
 	}
@@ -152,6 +157,13 @@ public class Reserva {
 	
 	public Set<Huesped> getHuespedes(){
 		return this.huespedes;
+	}
+	
+	public String getNombreHabitacion() {
+		if (habitacion != null) {			
+			return this.habitacion.getNombre();
+		}
+		return null;
 	}
 	
 }

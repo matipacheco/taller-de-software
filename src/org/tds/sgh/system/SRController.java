@@ -6,8 +6,10 @@ import java.util.Set;
 //amarillo
 import org.tds.sgh.business.CadenaHotelera;
 import org.tds.sgh.business.Cliente;
+import org.tds.sgh.business.Habitacion;
 import org.tds.sgh.business.Hotel;
 import org.tds.sgh.business.Reserva;
+import org.tds.sgh.business.TipoHabitacion;
 import org.tds.sgh.dtos.ClienteDTO;
 import org.tds.sgh.dtos.DTO;
 import org.tds.sgh.dtos.HabitacionDTO;
@@ -29,9 +31,12 @@ public class SRController implements IAltaClienteController, ICadenaController, 
 	@Override
 	public ClienteDTO registrarCliente(String rut, String nombre, String direccion, String telefono, String mail) {
 		try {			
-			Cliente cliente = this.cadenaHotelera.registrarCliente(rut, nombre, direccion, telefono, mail);
-			return DTO.getInstance().map(cliente);
+			Cliente clienteCreado = this.cadenaHotelera.registrarCliente(rut, nombre, direccion, telefono, mail);
+			cliente = clienteCreado;
+
+			return DTO.getInstance().map(clienteCreado);
 		} catch(Exception e) {
+			System.out.println("excepcion?" + e.getMessage());
 			return null;
 		}
 	}
@@ -96,8 +101,9 @@ public class SRController implements IAltaClienteController, ICadenaController, 
 	@Override
 	public ReservaDTO registrarReserva(String nombreHotel, String nombreTipoHabitacion, GregorianCalendar fechaInicio,
 			GregorianCalendar fechaFin, boolean modificablePorHuesped) throws Exception {
-		Reserva reserva = this.cadenaHotelera.registrarReserva(cliente, nombreHotel, nombreTipoHabitacion, fechaInicio, fechaFin, modificablePorHuesped);
-		return DTO.getInstance().map(reserva);
+		Reserva reservaCreada = this.cadenaHotelera.registrarReserva(cliente, nombreHotel, nombreTipoHabitacion, fechaInicio, fechaFin, modificablePorHuesped);
+		reserva = reservaCreada;
+		return DTO.getInstance().map(reservaCreada);
 	}
 
 	@Override
@@ -121,53 +127,50 @@ public class SRController implements IAltaClienteController, ICadenaController, 
 	 * Nota: al crear cliente / hotel / tipo de habitación hay que agregarlo a la lista de clientes de la cadena hotelera 
 	 */
 	@Override
-	public ClienteDTO agregarCliente(String rut, String nombre, String direccion, String telefono, String mail)
-			throws Exception {
-		// this.cadenaHotelera.agregarCliente(rut, nombre, direccion, telefono, mail);
-		return null;
+	public ClienteDTO agregarCliente(String rut, String nombre, String direccion, String telefono, String mail) throws Exception
+	{			
+			return DTO.getInstance().map(this.cadenaHotelera.registrarCliente(rut, nombre, direccion, telefono, mail));
 	}
 
 	@Override
 	public HabitacionDTO agregarHabitacion(String nombreHotel, String nombreTipoHabitacion, String nombre)
 			throws Exception {
-		// ????
-		return null;
+		Hotel hotel = this.cadenaHotelera.buscarHotel(nombreHotel);
+		TipoHabitacion tipoHabitacion = this.cadenaHotelera.buscarTipoHabitacion(nombreTipoHabitacion);
+		Habitacion habitacionNueva = this.cadenaHotelera.agregarHabitacion(hotel, tipoHabitacion, nombre);
+		return DTO.getInstance().map(hotel, habitacionNueva);
 	}
 
 	@Override
 	public HotelDTO agregarHotel(String nombre, String pais) throws Exception {
-		// this.cadenaHotelera.agregarTipoHabitacion(nombre);
-		return null;
+		return DTO.getInstance().map(this.cadenaHotelera.agregarHotel(nombre, pais));
 	}
 
 	@Override
 	public TipoHabitacionDTO agregarTipoHabitacion(String nombre) throws Exception {
-		// this.cadenaHotelera.agregarTipoHabitacion(nombre);
-		return null;
+		TipoHabitacion tipoHabitacion = this.cadenaHotelera.agregarTipoHabitacion(nombre);
+		return DTO.getInstance().map(tipoHabitacion);
 	}
 
 	@Override
 	public Set<ClienteDTO> getClientes() {
-		// TODO Auto-generated method stub
-		return null;
+		return DTO.getInstance().mapClientes(this.cadenaHotelera.listarClientes());
 	}
 
 	@Override
 	public Set<HabitacionDTO> getHabitaciones(String nombreHotel) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		Hotel hotel = this.cadenaHotelera.buscarHotel(nombreHotel);
+		return DTO.getInstance().mapHabitaciones(hotel, this.cadenaHotelera.listarHabitaciones(nombreHotel));
 	}
 
 	@Override
 	public Set<HotelDTO> getHoteles() {
-		// TODO Auto-generated method stub
-		return null;
+		return DTO.getInstance().mapHoteles(this.cadenaHotelera.listarHoteles());
 	}
 
 	@Override
 	public Set<TipoHabitacionDTO> getTiposHabitacion() {
-		// TODO Auto-generated method stub
-		return null;
+		return DTO.getInstance().mapTiposHabitacion(this.cadenaHotelera.listarTiposHabitacion());
 	}
 
 	@Override

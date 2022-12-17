@@ -1,11 +1,11 @@
 package org.tds.sgh.business;
 
-//verde
 public class Habitacion
 {
 	// --------------------------------------------------------------------------------------------
 	
 	private String nombre;
+	private Hotel hotel;
 	
 	private TipoHabitacion tipoHabitacion;
 	
@@ -15,6 +15,14 @@ public class Habitacion
 	public Habitacion(TipoHabitacion tipoHabitacion, String nombre)
 	{
 		this.reserva = null;
+		this.nombre = nombre;
+		this.tipoHabitacion = tipoHabitacion;
+	}
+	
+	public Habitacion(Hotel hotel, TipoHabitacion tipoHabitacion, String nombre)
+	{
+		this.reserva = null;
+		this.hotel = hotel;
 		this.nombre = nombre;
 		this.tipoHabitacion = tipoHabitacion;
 	}
@@ -33,7 +41,7 @@ public class Habitacion
 	
 	public Boolean esDeTipo(String nombreTipoHabitación)
 	{
-		return this.nombre == nombreTipoHabitación;
+		return this.tipoHabitacion.getNombre() == nombreTipoHabitación;
 	}
 
 	public Boolean asignada()

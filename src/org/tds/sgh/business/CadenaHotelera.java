@@ -6,6 +6,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.tds.sgh.dtos.DTO;
+import org.tds.sgh.infrastructure.Infrastructure;
+
 // verde
 public class CadenaHotelera
 {
@@ -47,7 +50,7 @@ public class CadenaHotelera
 		}
 		
 		Cliente cliente = new Cliente(rut, nombre, direccion, telefono, mail);
-		
+
 		this.clientes.put(cliente.getRut(), cliente);
 		
 		return cliente;
@@ -79,6 +82,14 @@ public class CadenaHotelera
 		this.tiposHabitacion.put(tipoHabitacion.getNombre(), tipoHabitacion);
 		
 		return tipoHabitacion;
+	}
+	
+	public Habitacion agregarHabitacion(Hotel hotel, TipoHabitacion tipoHabitacion, String nombre ) {
+		try {
+			return hotel.agregarHabitacion(tipoHabitacion, nombre);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 	
 	// CASO DE USO 8 - BUSCAR CLIENTE
@@ -114,6 +125,7 @@ public class CadenaHotelera
 	public Boolean confirmarDisponibilidad(String nombreHotel , String nombreTipoHabitación, GregorianCalendar fechaInicio, GregorianCalendar fechaFin)
 	{
 		Hotel hotel = hoteles.get(nombreHotel);
+		System.out.println("EL hotel es --- " + hotel.getNombre());
 		return hotel.confirmarDisponibilidad(nombreTipoHabitación, fechaInicio, fechaFin);
 	}
 	
@@ -140,9 +152,26 @@ public class CadenaHotelera
 		return alternativas;
 	}
 	
-	public Set<Reserva> buscarReservaDelCliente(Cliente clienteSeleccionado)
+	public Set<Reserva> buscarReservasDelCliente(Cliente clienteSeleccionado)
 	{
-		return null;
+		/**
+		 * 1 creear lista vacia
+		 * 2 iterar en todos los hoteles de la vida
+		 * 3 hacer un hotel.buscarReservasDelCliente(cliente)
+		 * 4 iterar sobre esas reservas, y si son del cliente se agregan a la lista
+		 */
+		Set<Reserva> reservasCliente = new HashSet<Reserva>();
+		
+		for (Hotel hotel : listarHoteles()) {
+			Set<Reserva> reservas = hotel.getReservasHotel();
+			
+			for (Reserva reserva : reservas) {
+				if (reserva.esDelCliente(clienteSeleccionado)) {
+					reservasCliente.add(reserva);
+				}
+			}
+		}
+		return reservasCliente;
 	}
 	
 	public Reserva modificarReserva(Reserva reserva, Cliente cliente, String nombreHotel, String nombreTipoHabitacion, GregorianCalendar fechaInicial, GregorianCalendar fechaFinal, Boolean modificadoPorHuesped)
@@ -176,12 +205,8 @@ public class CadenaHotelera
 	{
 		Reserva reservaActualizada = reserva.tomarReserva();
 		reservaActualizada.enviarMail("reservaTomada");
+		Infrastructure.getInstance().getSistemaFacturacion().iniciarEstadia(DTO.getInstance().map(reservaActualizada));
 		return reservaActualizada;
-	}
-	
-	public Set<Reserva> buscarReservasDelCliente(Cliente clienteSeleccionado)
-	{
-		return null;
 	}
 	
 	public Hotel buscarHotel(String nombre) throws Exception
@@ -226,5 +251,14 @@ public class CadenaHotelera
 	public Set<TipoHabitacion> listarTiposHabitacion()
 	{
 		return new HashSet<TipoHabitacion>(this.tiposHabitacion.values());
+	}
+	
+	public Set<Habitacion> listarHabitaciones(String nombreHotel) {
+		try {			
+			Hotel hotel = this.buscarHotel(nombreHotel);
+			return hotel.listarHabitaciones();
+		} catch (Exception e) {
+			return null;
+		}
 	}
 }

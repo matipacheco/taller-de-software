@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-//verde
 public class Hotel
 {
 	// --------------------------------------------------------------------------------------------
@@ -47,6 +46,7 @@ public class Hotel
 	public boolean confirmarDisponibilidad(String nombreTipoHabitacion, GregorianCalendar fechainicio, GregorianCalendar fechafin)
 	{
 		int cantHabs = 0;
+
 		for (Habitacion habitacion : habitaciones.values()) {
 			TipoHabitacion tipo = habitacion.getTipoHabitacion();
 			if (tipo.getNombre().equals(nombreTipoHabitacion)) {
@@ -61,13 +61,8 @@ public class Hotel
 				contReservas++;
 			}
 		}
-		
-		// esto se resumen en return cantHabs > contReservas 
-		if(cantHabs > contReservas) {
-			return true;
-		} else {
-			return false;
-		}
+
+		return cantHabs > contReservas;
 	}
 	
 	public Reserva buscarReserva(Long codigoReserva)
@@ -99,10 +94,9 @@ public class Hotel
 		// this.reservas
 	}
 	
-	public Set<Reserva> buscarReservasHotel()
+	public Set<Reserva> getReservasHotel()
 	{
-
-		return null;
+		return this.reservas;
 	}
 
 	public Set<Reserva> buscarReservasPendientes()
