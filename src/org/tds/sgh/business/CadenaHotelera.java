@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.tds.sgh.business.Reserva.Estado;
 import org.tds.sgh.dtos.DTO;
 import org.tds.sgh.infrastructure.Infrastructure;
 
@@ -91,6 +92,10 @@ public class CadenaHotelera
 	// CASO DE USO 8 - BUSCAR CLIENTE
 	public Set<Cliente> buscarCliente(String patronNombreCliente)
 	{
+		
+		if(patronNombreCliente == null)
+			throw new NullPointerException();
+		
 		Set<Cliente> clientesEncontrados = new HashSet<Cliente>();
 		
 		for (Cliente cliente : this.clientes.values())
@@ -131,8 +136,21 @@ public class CadenaHotelera
 		return hotel.crearReserva(tipoHabitacion, cliente, fechaInicial, fechaFinal, modificablePorHuesped);
 	}
 	
-	public Set<Hotel> sugerirAlternativas(String pais, String nombreTipoHabitacion, GregorianCalendar fechaInicial, GregorianCalendar fechaFinal)
+	public Set<Hotel> sugerirAlternativas(String pais, String nombreTipoHabitacion, GregorianCalendar fechaInicial, GregorianCalendar fechaFinal) throws Exception
 	{
+		
+		//Exception si no existe!
+		if(this.tiposHabitacion.get(nombreTipoHabitacion) == null)
+			throw new Exception("TipoHabitacion no existe");
+		
+		//Exception fecha pasada!
+		if(Infrastructure.getInstance().getCalendario().esPasada(fechaInicial))
+			throw new Exception("Fecha pasada");
+		
+		//Exception fecha final menor a fecha inicial!
+		if (Infrastructure.getInstance().getCalendario().esAnterior(fechaFinal, fechaInicial))
+			throw new Exception("Fecha final es anterior a fecha pasada");
+		
 		Set<Hotel> alternativas = new HashSet<Hotel>();
 
 		for (Hotel hotel : hoteles.values())
@@ -155,7 +173,7 @@ public class CadenaHotelera
 			Set<Reserva> reservas = hotel.getReservasHotel();
 			
 			for (Reserva reserva : reservas) {
-				if (reserva.esDelCliente(clienteSeleccionado)) {
+				if (reserva.esDelCliente(clienteSeleccionado) && reserva.getEstado() == Estado.Pendiente) {
 					reservasCliente.add(reserva);
 				}
 			}

@@ -43,6 +43,11 @@ public class SRController implements IAltaClienteController, ICadenaController, 
 	@Override
 	public ReservaDTO seleccionarReserva(long codigoReserva) throws Exception {
 		Reserva reservaSeleccionada = this.cadenaHotelera.seleccionarReserva(codigoReserva);
+		
+		if(cliente != null)
+			if(!reservaSeleccionada.esDelCliente(cliente))
+				throw new Exception("Cliente seleccionado no corresponde a reserva");
+		
 		reserva = reservaSeleccionada;
 		return DTO.getInstance().map(reservaSeleccionada);
 	}
