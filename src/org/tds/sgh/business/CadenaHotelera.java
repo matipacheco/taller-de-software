@@ -123,9 +123,13 @@ public class CadenaHotelera
 		
 	}
 	
-	public Boolean confirmarDisponibilidad(String nombreHotel , String nombreTipoHabitación, GregorianCalendar fechaInicio, GregorianCalendar fechaFin)
+	public Boolean confirmarDisponibilidad(String nombreHotel , String nombreTipoHabitación, GregorianCalendar fechaInicio, GregorianCalendar fechaFin) throws Exception
 	{
 		Hotel hotel = hoteles.get(nombreHotel);
+		
+		if(this.tiposHabitacion.get(nombreTipoHabitación) == null)
+			throw new Exception("TipoHabitacion no existe");
+		
 		return hotel.confirmarDisponibilidad(nombreTipoHabitación, fechaInicio, fechaFin);
 	}
 	
