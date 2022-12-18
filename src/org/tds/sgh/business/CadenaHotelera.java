@@ -130,6 +130,12 @@ public class CadenaHotelera
 		if(this.tiposHabitacion.get(nombreTipoHabitación) == null)
 			throw new Exception("TipoHabitacion no existe");
 		
+		if(Infrastructure.getInstance().getCalendario().esPasada(fechaInicio))
+			throw new Exception("Fecha pasada");
+		
+		if(Infrastructure.getInstance().getCalendario().esPosterior(fechaInicio, fechaFin))
+			throw new Exception("Fecha inicio posterior");
+		
 		return hotel.confirmarDisponibilidad(nombreTipoHabitación, fechaInicio, fechaFin);
 	}
 	
