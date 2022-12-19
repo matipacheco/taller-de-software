@@ -43,7 +43,7 @@ public class Hotel
 		return habitacion;
 	}
 	
-	public boolean confirmarDisponibilidad(String nombreTipoHabitacion, GregorianCalendar fechainicio, GregorianCalendar fechafin)
+	public boolean confirmarDisponibilidad(String nombreTipoHabitacion, GregorianCalendar fechainicio, GregorianCalendar fechafin, Reserva reservaCliente)
 	{
 		int cantHabs = 0;
 
@@ -55,9 +55,17 @@ public class Hotel
 		}
 		int contReservas = 0;
 		
+		if(reservaCliente != null) {
+			if(reservas.size() == 1 && cantHabs == 1)
+				return true;
+		}
 
 		for (Reserva reserva : reservas) {
+			
 			Boolean reservaPendienteEnRango = reserva.reservaPendienteEnRango(nombreTipoHabitacion, fechainicio, fechafin);
+			
+			
+			
 			if (reservaPendienteEnRango) {
 				
 				
@@ -67,6 +75,8 @@ public class Hotel
 
 			}
 		}
+		
+		
 
 		return cantHabs > contReservas;
 	}

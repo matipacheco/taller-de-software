@@ -123,7 +123,7 @@ public class CadenaHotelera
 		
 	}
 	
-	public Boolean confirmarDisponibilidad(String nombreHotel , String nombreTipoHabitación, GregorianCalendar fechaInicio, GregorianCalendar fechaFin) throws Exception
+	public Boolean confirmarDisponibilidad(String nombreHotel , String nombreTipoHabitación, GregorianCalendar fechaInicio, GregorianCalendar fechaFin, Reserva reserva) throws Exception
 	{
 		Hotel hotel = hoteles.get(nombreHotel);
 		
@@ -136,7 +136,7 @@ public class CadenaHotelera
 		if(Infrastructure.getInstance().getCalendario().esPosterior(fechaInicio, fechaFin))
 			throw new Exception("Fecha inicio posterior");
 		
-		return hotel.confirmarDisponibilidad(nombreTipoHabitación, fechaInicio, fechaFin);
+		return hotel.confirmarDisponibilidad(nombreTipoHabitación, fechaInicio, fechaFin, reserva);
 	}
 	
 	public Reserva registrarReserva(Cliente cliente, String nombreHotel, String nombreTipoHabitacion, GregorianCalendar fechaInicial, GregorianCalendar fechaFinal, Boolean modificablePorHuesped)
@@ -166,7 +166,7 @@ public class CadenaHotelera
 		for (Hotel hotel : hoteles.values())
 		{
 			if (pais == hotel.getPais()) {
-				if (confirmarDisponibilidad(hotel.getNombre(), nombreTipoHabitacion, fechaInicial, fechaFinal)) {
+				if (confirmarDisponibilidad(hotel.getNombre(), nombreTipoHabitacion, fechaInicial, fechaFinal, null)) {
 					alternativas.add(hotel);
 				}
 			}

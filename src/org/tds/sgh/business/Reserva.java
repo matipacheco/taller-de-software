@@ -48,12 +48,18 @@ public class Reserva {
 		return true;
 	}
 	
-	public Reserva update(TipoHabitacion tipoHabitacion, GregorianCalendar fechaInicio, GregorianCalendar fechaFin, boolean mph, Hotel hotel) {		
+	public Reserva update(TipoHabitacion tipoHabitacion, GregorianCalendar fechaInicio, GregorianCalendar fechaFin, boolean mph, Hotel hotel) throws Exception {		
+		
+		if(!this.modificablePorHuesped)
+			throw new Exception("No es modificable");
+		
 		this.tipoHabitacion = tipoHabitacion;
 		this.fechaInicio = fechaInicio;
 		this.fechaFin = fechaFin;
 		this.modificablePorHuesped = mph;
 		this.hotel = hotel;
+		
+		
 		
 		return this;
 	}
