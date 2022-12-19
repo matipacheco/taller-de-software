@@ -107,7 +107,7 @@ public class SRController implements IAltaClienteController, ICadenaController, 
 	@Override
 	public Set<HotelDTO> sugerirAlternativas(String pais, String nombreTipoHabitacion, GregorianCalendar fechaInicio,
 			GregorianCalendar fechaFin) throws Exception {
-		Set<Hotel> hoteles = this.cadenaHotelera.sugerirAlternativas(pais, nombreTipoHabitacion, fechaInicio, fechaFin);
+		Set<Hotel> hoteles = this.cadenaHotelera.sugerirAlternativas(pais, nombreTipoHabitacion, fechaInicio, fechaFin, this.reserva);
 		return DTO.getInstance().mapHoteles(hoteles);
 	}
 

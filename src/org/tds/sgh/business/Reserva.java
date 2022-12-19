@@ -4,6 +4,7 @@ import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.tds.sgh.infrastructure.ICalendario;
 import org.tds.sgh.infrastructure.Infrastructure;
 
 public class Reserva {
@@ -26,6 +27,7 @@ public class Reserva {
 	private Hotel hotel;
 	private Set<Huesped> huespedes;
 	private Habitacion habitacion;
+	private ICalendario cal;
 	
 	
 	public Reserva (TipoHabitacion tipoHabitacion, Cliente cliente, GregorianCalendar fechaInicio, GregorianCalendar fechaFin, boolean mph, Hotel hotel) {
@@ -38,6 +40,7 @@ public class Reserva {
 		this.estado = Estado.Pendiente;
 		this.huespedes = new HashSet<Huesped>();
 		this.habitacion = null;
+		this.cal = Infrastructure.getInstance().getCalendario();
 	}
 	
 	public boolean coincide(String nombreTipoHabitacion, GregorianCalendar fechaInicio, GregorianCalendar fechaFin) {
@@ -111,11 +114,12 @@ public class Reserva {
 	
 	public boolean reservaPendienteEnRango(String nombreTipoHabitacion, GregorianCalendar fechainicio, GregorianCalendar fechafin) {
 		if(this.tipoHabitacion.getNombre().equals(nombreTipoHabitacion)) {
-		
+			
 			if(
-				!((Infrastructure.getInstance().getCalendario().esAnterior(fechainicio, this.fechaInicio)
-			&& Infrastructure.getInstance().getCalendario().esAnterior(fechafin, this.fechaInicio)) || 
-			 Infrastructure.getInstance().getCalendario().esPosterior(fechainicio, this.fechaFin))
+				!(
+					(cal.esAnterior(fechainicio, this.fechaInicio) && (cal.esAnterior(fechafin, this.fechaInicio) || cal.esMismoDia(fechafin, this.fechaInicio) ) ) 
+					|| ( cal.esPosterior(fechainicio, this.fechaFin) || cal.esMismoDia(fechainicio, this.fechaFin) )
+				)
 			 
 			 
 			 )

@@ -146,7 +146,7 @@ public class CadenaHotelera
 		return hotel.crearReserva(tipoHabitacion, cliente, fechaInicial, fechaFinal, modificablePorHuesped);
 	}
 	
-	public Set<Hotel> sugerirAlternativas(String pais, String nombreTipoHabitacion, GregorianCalendar fechaInicial, GregorianCalendar fechaFinal) throws Exception
+	public Set<Hotel> sugerirAlternativas(String pais, String nombreTipoHabitacion, GregorianCalendar fechaInicial, GregorianCalendar fechaFinal, Reserva reserva) throws Exception
 	{
 		
 		//Exception si no existe!
@@ -175,15 +175,20 @@ public class CadenaHotelera
 		return alternativas;
 	}
 	
-	public Set<Reserva> buscarReservasDelCliente(Cliente clienteSeleccionado)
+	public Set<Reserva> buscarReservasDelCliente(Cliente clienteSeleccionado) throws Exception
 	{
+		
+		if(clienteSeleccionado == null)
+			throw new Exception("No hay cliente seleccionado");
+		
 		Set<Reserva> reservasCliente = new HashSet<Reserva>();
 		
 		for (Hotel hotel : listarHoteles()) {
 			Set<Reserva> reservas = hotel.getReservasHotel();
 			
 			for (Reserva reserva : reservas) {
-				if (reserva.esDelCliente(clienteSeleccionado) && reserva.getEstado() == Estado.Pendiente) {
+				if (reserva.esDelCliente(clienteSeleccionado) && reserva.getEstado() == Estado.Pendiente
+					&& !Infrastructure.getInstance().getCalendario().esPasada(reserva.getFechaFin())) {
 					reservasCliente.add(reserva);
 				}
 			}

@@ -54,11 +54,17 @@ public class Hotel
 			}
 		}
 		int contReservas = 0;
+		
 
 		for (Reserva reserva : reservas) {
 			Boolean reservaPendienteEnRango = reserva.reservaPendienteEnRango(nombreTipoHabitacion, fechainicio, fechafin);
 			if (reservaPendienteEnRango) {
-				contReservas++;
+				
+				
+							contReservas++;
+					
+				
+
 			}
 		}
 
