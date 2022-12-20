@@ -3,6 +3,7 @@ package org.tds.sgh.business;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -23,7 +24,7 @@ public class Hotel
 		this.nombre = nombre;
 		
 		this.pais = pais;
-		this.reservas = new HashSet<Reserva>();
+		this.reservas = new LinkedHashSet<Reserva>();
 		
 	}
 	
@@ -118,7 +119,7 @@ public class Hotel
 	public Set<Reserva> buscarReservasPendientes()
 	{
 		
-		Set<Reserva> reservasPendientes = new HashSet<Reserva>();
+		Set<Reserva> reservasPendientes = new LinkedHashSet<Reserva>();
 		
 		for(Reserva reserva: this.reservas) {
 			
@@ -147,6 +148,6 @@ public class Hotel
 	
 	public Set<Habitacion> listarHabitaciones()
 	{
-		return new HashSet<Habitacion>(this.habitaciones.values());
+		return new LinkedHashSet<Habitacion>(this.habitaciones.values());
 	}
 }

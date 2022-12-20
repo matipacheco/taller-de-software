@@ -3,6 +3,7 @@ package org.tds.sgh.business;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -96,7 +97,7 @@ public class CadenaHotelera
 		if(patronNombreCliente == null)
 			throw new NullPointerException();
 		
-		Set<Cliente> clientesEncontrados = new HashSet<Cliente>();
+		Set<Cliente> clientesEncontrados = new LinkedHashSet<Cliente>();
 		
 		for (Cliente cliente : this.clientes.values())
 		{
@@ -161,7 +162,7 @@ public class CadenaHotelera
 		if (Infrastructure.getInstance().getCalendario().esAnterior(fechaFinal, fechaInicial))
 			throw new Exception("Fecha final es anterior a fecha pasada");
 		
-		Set<Hotel> alternativas = new HashSet<Hotel>();
+		Set<Hotel> alternativas = new LinkedHashSet<Hotel>();
 
 		for (Hotel hotel : hoteles.values())
 		{
@@ -181,7 +182,7 @@ public class CadenaHotelera
 		if(clienteSeleccionado == null)
 			throw new Exception("No hay cliente seleccionado");
 		
-		Set<Reserva> reservasCliente = new HashSet<Reserva>();
+		Set<Reserva> reservasCliente = new LinkedHashSet<Reserva>();
 		
 		for (Hotel hotel : listarHoteles()) {
 			Set<Reserva> reservas = hotel.getReservasHotel();
