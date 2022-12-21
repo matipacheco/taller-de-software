@@ -87,7 +87,13 @@ public class Reserva {
 	}
 	
 	public boolean esDelCliente(Cliente clienteSeleccionado) {
-		return cliente.getRut() == clienteSeleccionado.getRut();
+		try {
+			return cliente.getRut() == clienteSeleccionado.getRut();
+		}
+		catch(Exception ex) {
+			return false;
+		}
+		
 	}
 
 	public boolean estaPendiente() {

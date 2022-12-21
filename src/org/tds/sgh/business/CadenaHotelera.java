@@ -227,15 +227,54 @@ public class CadenaHotelera
 		return hotel.buscarReservasPendientes();
 	}
 
-	public Reserva seleccionarReserva(Long codigo)
+	public Reserva seleccionarReserva(Long codigo, Cliente cliente) throws Exception
 	{	 
+		/*
+		Reserva reserva = null;
+		int totalReservasHotel = 0;
+		
+		for(Hotel hotel : hoteles.values()) {
+			reserva = hotel.buscarReserva(codigo);
+			if(reserva != null) {
+				totalReservasHotel = hotel.getReservasHotel().size();
+				break;
+			}
+		}
+		
+		
+		
+		if(totalReservasHotel == 0) {
+			return null;
+		}
+		else if (totalReservasHotel == 1) {
+			return reserva;
+		}
+		else {
+			if (cliente == null)
+				throw new Exception("No hay cliente seleccionado");
+			if (reserva.esDelCliente(cliente))
+				return reserva;
+			else
+				return null;
+		}
+		*/
+		
+		
+		
 		 for(Hotel hotel: hoteles.values()) {
 			 Reserva reserva = hotel.buscarReserva(codigo);
 			 if(reserva != null)
-			 	return reserva;
+				if(cliente != null)
+					if(reserva.esDelCliente(cliente))
+						return reserva;
+					else
+						return null;
+				else
+					return reserva;
 		 }
+		 
 		
-		return null;
+		 return null;
 	}
 	
 	public Reserva registrarHuesped(Reserva reserva, String nombre, String documento)
