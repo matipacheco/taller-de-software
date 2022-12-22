@@ -2,6 +2,7 @@ package org.tds.sgh.business;
 
 import javax.persistence.*;
 
+@Entity
 public class Habitacion
 {
 	// --------------------------------------------------------------------------------------------
@@ -52,6 +53,7 @@ public class Habitacion
 		this.nombre = nombre;
 	}
 	
+	@ManyToOne(cascade=CascadeType.ALL)
 	public Hotel getHotel() {
 		return hotel;
 	}
@@ -70,16 +72,15 @@ public class Habitacion
 	}
 
 	@OneToOne(cascade=CascadeType.ALL)
+	public TipoHabitacion getTipoHabitacion() {
+		return this.tipoHabitacion;
+	}
+
 	public void setTipoHabitacion(TipoHabitacion tipoHabitacion) {
 		this.tipoHabitacion = tipoHabitacion;
 	}
 
 	// --------------------------------------------------------------------------------------------
-
-	public TipoHabitacion getTipoHabitacion()
-	{
-		return this.tipoHabitacion;
-	}
 	
 	public Boolean esDeTipo(String nombreTipoHabitación)
 	{

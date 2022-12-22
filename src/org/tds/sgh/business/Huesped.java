@@ -2,6 +2,7 @@ package org.tds.sgh.business;
 
 import javax.persistence.*;
 
+@Entity
 public class Huesped {
 	private long id;
 	

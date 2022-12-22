@@ -9,6 +9,7 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+@Entity
 public class Hotel
 {
 	// --------------------------------------------------------------------------------------------
@@ -51,9 +52,17 @@ public class Hotel
 	public void setReservas(Set<Reserva> reservas) {
 		this.reservas = reservas;
 	}
+	
+	public String getPais() {
+		return this.pais;
+	}
 
 	public void setPais(String pais) {
 		this.pais = pais;
+	}
+	
+	public String getNombre() {
+		return this.nombre;
 	}
 
 	public void setNombre(String nombre) {
@@ -62,6 +71,10 @@ public class Hotel
 
 	@OneToMany(cascade=CascadeType.ALL)
 	@MapKey(name="nombre")
+	public Map<String, Habitacion> getHabitaciones() {
+		return habitaciones;
+	}
+
 	public void setHabitaciones(Map<String, Habitacion> habitaciones) {
 		this.habitaciones = habitaciones;
 	}
@@ -100,18 +113,10 @@ public class Hotel
 		}
 
 		for (Reserva reserva : reservas) {
-			
 			Boolean reservaPendienteEnRango = reserva.reservaPendienteEnRango(nombreTipoHabitacion, fechainicio, fechafin);
 			
-			
-			
 			if (reservaPendienteEnRango) {
-				
-				
-							contReservas++;
-					
-				
-
+				contReservas++;
 			}
 		}
 		
@@ -149,11 +154,6 @@ public class Hotel
 	{
 		this.reservas.add(reserva);
 	}
-	
-	public Set<Reserva> getReservasHotel()
-	{
-		return this.reservas;
-	}
 
 	public Set<Reserva> buscarReservasPendientes()
 	{
@@ -168,21 +168,6 @@ public class Hotel
 			
 		}
 		return reservasPendientes;
-	}
-
-	public Map<String, Habitacion> getHabitaciones()
-	{
-		return habitaciones;
-	}
-	
-	public String getNombre()
-	{
-		return this.nombre;
-	}
-	
-	public String getPais()
-	{
-		return this.pais;
 	}
 	
 	public Set<Habitacion> listarHabitaciones()

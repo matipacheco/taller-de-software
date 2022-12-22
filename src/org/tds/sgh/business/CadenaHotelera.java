@@ -237,7 +237,7 @@ public class CadenaHotelera
 		Set<Reserva> reservasCliente = new LinkedHashSet<Reserva>();
 		
 		for (Hotel hotel : listarHoteles()) {
-			Set<Reserva> reservas = hotel.getReservasHotel();
+			Set<Reserva> reservas = hotel.getReservas();
 			
 			for (Reserva reserva : reservas) {
 				if (reserva.esDelCliente(clienteSeleccionado) && reserva.getEstado() == Estado.Pendiente

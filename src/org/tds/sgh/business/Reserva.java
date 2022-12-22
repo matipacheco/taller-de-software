@@ -9,6 +9,7 @@ import org.tds.sgh.infrastructure.Infrastructure;
 
 import javax.persistence.*;
 
+@Entity
 public class Reserva {
 
 	public enum Estado {
