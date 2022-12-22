@@ -73,7 +73,7 @@ public class DTO
 				reserva.getFechaFin(),
 				reserva.getModificablePorHuesped(),
 				reserva.getEstado().toString(),
-				reserva.getNombreHabitacion(),
+				reserva.nombreHabitacion(),
 				this.mapHuespedes(reserva.getHuespedes())
 				);
 	}

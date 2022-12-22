@@ -31,7 +31,6 @@ public class Reserva {
 	private Hotel hotel;
 	private Set<Huesped> huespedes;
 	private Habitacion habitacion;
-	private ICalendario cal;
 	
 	// --------------------------------------------------------------------------------------------
 	
@@ -46,7 +45,6 @@ public class Reserva {
 		this.estado = Estado.Pendiente;
 		this.huespedes = new HashSet<Huesped>();
 		this.habitacion = null;
-		this.cal = Infrastructure.getInstance().getCalendario();
 	}
 	
 	// --------------------------------------------------------------------------------------------
@@ -88,14 +86,6 @@ public class Reserva {
 		this.tipoHabitacion = tipoHabitacion;
 	}
 
-	public ICalendario getCal() {
-		return cal;
-	}
-
-	public void setCal(ICalendario cal) {
-		this.cal = cal;
-	}
-
 	public long getCodigo() {
 		return codigo;
 	}
@@ -120,6 +110,7 @@ public class Reserva {
 		return fechaFin;
 	}
 	
+	@OneToOne(cascade=CascadeType.ALL)
 	public Hotel getHotel() {
 		return hotel;
 	}
@@ -144,6 +135,7 @@ public class Reserva {
 		this.modificablePorHuesped = modificablePorHuesped;
 	}
 	
+	@OneToMany(cascade=CascadeType.ALL)
 	public Set<Huesped> getHuespedes(){
 		return this.huespedes;
 	}
@@ -241,6 +233,7 @@ public class Reserva {
 	}
 	
 	public boolean reservaPendienteEnRango(String nombreTipoHabitacion, GregorianCalendar fechainicio, GregorianCalendar fechafin) {
+		ICalendario cal = Infrastructure.getInstance().getCalendario();
 		if(this.tipoHabitacion.getNombre().equals(nombreTipoHabitacion)) {
 			
 			if(
@@ -261,7 +254,7 @@ public class Reserva {
 		return false;
 	}
 	
-	public String getNombreHabitacion() {
+	public String nombreHabitacion() {
 		if (habitacion != null) {			
 			return this.habitacion.getNombre();
 		}

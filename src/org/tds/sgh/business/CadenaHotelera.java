@@ -80,12 +80,12 @@ public class CadenaHotelera
 		this.hoteles = hoteles;
 	}
 
+	@OneToMany(cascade=CascadeType.ALL)
+	@MapKey(name="nombre")
 	public Map<String, TipoHabitacion> getTiposHabitacion() {
 		return tiposHabitacion;
 	}
 
-	@OneToMany(cascade=CascadeType.ALL)
-	@MapKey(name="nombre")
 	public void setTiposHabitacion(Map<String, TipoHabitacion> tiposHabitacion) {
 		this.tiposHabitacion = tiposHabitacion;
 	}
