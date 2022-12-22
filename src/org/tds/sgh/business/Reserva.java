@@ -7,6 +7,8 @@ import java.util.Set;
 import org.tds.sgh.infrastructure.ICalendario;
 import org.tds.sgh.infrastructure.Infrastructure;
 
+import javax.persistence.*;
+
 public class Reserva {
 
 	public enum Estado {
@@ -17,6 +19,7 @@ public class Reserva {
 		NoTomada,
 	}
 
+	private long id;
 	private Estado estado;
 	private long codigo;
 	private GregorianCalendar fechaInicio;
@@ -29,9 +32,9 @@ public class Reserva {
 	private Habitacion habitacion;
 	private ICalendario cal;
 	
+	// --------------------------------------------------------------------------------------------
 	
 	public Reserva (long codigo, TipoHabitacion tipoHabitacion, Cliente cliente, GregorianCalendar fechaInicio, GregorianCalendar fechaFin, boolean mph, Hotel hotel) {
-		
 		this.codigo = codigo;
 		this.tipoHabitacion = tipoHabitacion;
 		this.cliente = cliente;
@@ -44,6 +47,116 @@ public class Reserva {
 		this.habitacion = null;
 		this.cal = Infrastructure.getInstance().getCalendario();
 	}
+	
+	// --------------------------------------------------------------------------------------------
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	@OneToOne(cascade=CascadeType.ALL)
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	@OneToOne(cascade=CascadeType.ALL)
+	public Habitacion getHabitacion() {
+		return habitacion;
+	}
+
+	public void setHabitacion(Habitacion habitacion) {
+		this.habitacion = habitacion;
+	}
+	
+	@OneToOne(cascade=CascadeType.ALL)
+	public TipoHabitacion getTipoHabitacion() {
+		return this.tipoHabitacion;
+	}
+
+	public void setTipoHabitacion(TipoHabitacion tipoHabitacion) {
+		this.tipoHabitacion = tipoHabitacion;
+	}
+
+	public ICalendario getCal() {
+		return cal;
+	}
+
+	public void setCal(ICalendario cal) {
+		this.cal = cal;
+	}
+
+	public long getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(long codigo) {
+		this.codigo = codigo;
+	}
+	
+	public GregorianCalendar getFechaInicio() {
+		return fechaInicio;
+	}
+
+	public void setFechaInicio(GregorianCalendar fechaInicio) {
+		this.fechaInicio = fechaInicio;
+	}
+
+	public void setFechaFin(GregorianCalendar fechaFin) {
+		this.fechaFin = fechaFin;
+	}
+	
+	public GregorianCalendar getFechaFin() {
+		return fechaFin;
+	}
+	
+	public Hotel getHotel() {
+		return hotel;
+	}
+
+	public void setHotel(Hotel hotel) {
+		this.hotel = hotel;
+	}
+	
+	public Estado getEstado(){
+		return this.estado;
+	}
+	
+	public void setEstado(Estado estado) {
+		this.estado = estado;
+	}
+	
+	public Boolean getModificablePorHuesped() {
+		return modificablePorHuesped; 
+	}
+	
+	public void setModificablePorHuesped(boolean modificablePorHuesped) {
+		this.modificablePorHuesped = modificablePorHuesped;
+	}
+	
+	public Set<Huesped> getHuespedes(){
+		return this.huespedes;
+	}
+	
+	public void setHuespedes(Set<Huesped> huespedes) {
+		this.huespedes = huespedes;
+	}
+	
+	public String rutCliente() {
+		return this.cliente.getRut();
+	}
+	
+	// --------------------------------------------------------------------------------------------
+	
 	
 	public boolean coincide(String nombreTipoHabitacion, GregorianCalendar fechaInicio, GregorianCalendar fechaFin) {
 		//not implemented
@@ -145,46 +258,6 @@ public class Reserva {
 		}
 		
 		return false;
-	}
-	
-	public Hotel getHotel() {
-		return hotel;
-	}
-	
-	public TipoHabitacion getTipo() {
-		return tipoHabitacion;
-	}
-	
-	public long getCodigo() {
-		return codigo;
-	}
-	
-	public GregorianCalendar getFechaInicio() {
-		return fechaInicio;
-	}
-	
-	public GregorianCalendar getFechaFin() {
-		return fechaFin;
-	}
-	
-	public String rutCliente() {
-		return this.cliente.getRut();
-	}
-	
-	public TipoHabitacion getTipoHabitacion() {
-		return this.tipoHabitacion;
-	}
-	
-	public Estado getEstado(){
-		return this.estado;
-	}
-	
-	public Boolean getModificablePorHuesped() {
-		return modificablePorHuesped; 
-	}
-	
-	public Set<Huesped> getHuespedes(){
-		return this.huespedes;
 	}
 	
 	public String getNombreHabitacion() {

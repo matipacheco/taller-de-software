@@ -2,13 +2,18 @@ package org.tds.sgh.business;
 
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
+import javax.persistence.*;
+
 public class Hotel
 {
 	// --------------------------------------------------------------------------------------------
+	
+	private long id;
 	private String pais;
 	private String nombre;
 	
@@ -18,13 +23,47 @@ public class Hotel
 	
 	public Hotel(String nombre, String pais)
 	{
+		this.pais = pais;
+		this.nombre = nombre;		
+		this.reservas = new HashSet<Reserva>();
 		this.habitaciones = new HashMap<String, Habitacion>();
 		
-		this.nombre = nombre;
-		
+	}
+	
+	// --------------------------------------------------------------------------------------------
+	
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	@OneToMany(cascade=CascadeType.ALL)
+	public Set<Reserva> getReservas() {
+		return reservas;
+	}
+
+	public void setReservas(Set<Reserva> reservas) {
+		this.reservas = reservas;
+	}
+
+	public void setPais(String pais) {
 		this.pais = pais;
-		this.reservas = new LinkedHashSet<Reserva>();
-		
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	@OneToMany(cascade=CascadeType.ALL)
+	@MapKey(name="nombre")
+	public void setHabitaciones(Map<String, Habitacion> habitaciones) {
+		this.habitaciones = habitaciones;
 	}
 	
 	// --------------------------------------------------------------------------------------------
@@ -42,7 +81,7 @@ public class Hotel
 		
 		return habitacion;
 	}
-	
+
 	public boolean confirmarDisponibilidad(String nombreTipoHabitacion, GregorianCalendar fechainicio, GregorianCalendar fechafin, Reserva reservaCliente)
 	{
 		int cantHabs = 0;
