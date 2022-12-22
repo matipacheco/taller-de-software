@@ -30,7 +30,9 @@ public class Reserva {
 	private ICalendario cal;
 	
 	
-	public Reserva (TipoHabitacion tipoHabitacion, Cliente cliente, GregorianCalendar fechaInicio, GregorianCalendar fechaFin, boolean mph, Hotel hotel) {
+	public Reserva (long codigo, TipoHabitacion tipoHabitacion, Cliente cliente, GregorianCalendar fechaInicio, GregorianCalendar fechaFin, boolean mph, Hotel hotel) {
+		
+		this.codigo = codigo;
 		this.tipoHabitacion = tipoHabitacion;
 		this.cliente = cliente;
 		this.fechaInicio = fechaInicio;

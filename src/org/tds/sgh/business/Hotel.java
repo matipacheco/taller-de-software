@@ -2,7 +2,6 @@ package org.tds.sgh.business;
 
 import java.util.GregorianCalendar;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
@@ -94,7 +93,8 @@ public class Hotel
 	
 	public Reserva crearReserva(TipoHabitacion tipoHab, Cliente cliente, GregorianCalendar fechainicio, GregorianCalendar fechafin, Boolean modificablePorHuesped)
 	{
-		Reserva reservaCreada = new Reserva(tipoHab, cliente, fechainicio, fechafin, modificablePorHuesped, this);
+		long codigo = reservas.size() + 1;
+		Reserva reservaCreada = new Reserva(codigo ,tipoHab, cliente, fechainicio, fechafin, modificablePorHuesped, this);
 		reservaCreada.enviarMail("reservaCreada");
 		this.reservas.add(reservaCreada);
 
