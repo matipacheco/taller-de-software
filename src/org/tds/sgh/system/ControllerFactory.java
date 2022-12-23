@@ -42,6 +42,12 @@ public class ControllerFactory implements IControllerFactory
 		return new SRController(this.cadenaHotelera);
 	}
 	
+	/* @Override
+	public IIdentificarReservaClienteController createModificarReservaController()
+	{
+		return new ModifiedSRController(this.cadenaHotelera);
+	}*/
+
 	@Override
 	public ITomarReservaController createTomarReservaController()
 	{

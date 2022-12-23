@@ -280,44 +280,13 @@ public class CadenaHotelera
 	}
 
 	public Reserva seleccionarReserva(Long codigo, Cliente cliente) throws Exception
-	{	 
-		/*
-		Reserva reserva = null;
-		int totalReservasHotel = 0;
-		
-		for(Hotel hotel : hoteles.values()) {
-			reserva = hotel.buscarReserva(codigo);
-			if(reserva != null) {
-				totalReservasHotel = hotel.getReservasHotel().size();
-				break;
-			}
-		}
-		
-		
-		
-		if(totalReservasHotel == 0) {
-			return null;
-		}
-		else if (totalReservasHotel == 1) {
-			return reserva;
-		}
-		else {
-			if (cliente == null)
-				throw new Exception("No hay cliente seleccionado");
-			if (reserva.esDelCliente(cliente))
-				return reserva;
-			else
-				return null;
-		}
-		*/
-		
-		
-		
-		 for(Hotel hotel: hoteles.values()) {
+	{
+		 for (Hotel hotel: hoteles.values()) {
 			 Reserva reserva = hotel.buscarReserva(codigo);
-			 if(reserva != null)
-				if(cliente != null)
-					if(reserva.esDelCliente(cliente))
+
+			 if (reserva != null)
+				if (cliente != null)
+					if (reserva.esDelCliente(cliente))
 						return reserva;
 					else
 						return null;
