@@ -2,13 +2,19 @@ package org.tds.sgh.business;
 
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
+import javax.persistence.*;
+
+@Entity
 public class Hotel
 {
 	// --------------------------------------------------------------------------------------------
+	
+	private long id;
 	private String pais;
 	private String nombre;
 	
@@ -18,13 +24,59 @@ public class Hotel
 	
 	public Hotel(String nombre, String pais)
 	{
+		this.pais = pais;
+		this.nombre = nombre;		
+		this.reservas = new HashSet<Reserva>();
 		this.habitaciones = new HashMap<String, Habitacion>();
 		
-		this.nombre = nombre;
-		
+	}
+	
+	// --------------------------------------------------------------------------------------------
+	
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	@OneToMany(cascade=CascadeType.ALL)
+	public Set<Reserva> getReservas() {
+		return reservas;
+	}
+
+	public void setReservas(Set<Reserva> reservas) {
+		this.reservas = reservas;
+	}
+	
+	public String getPais() {
+		return this.pais;
+	}
+
+	public void setPais(String pais) {
 		this.pais = pais;
-		this.reservas = new LinkedHashSet<Reserva>();
-		
+	}
+	
+	public String getNombre() {
+		return this.nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	@OneToMany(cascade=CascadeType.ALL)
+	@MapKey(name="nombre")
+	public Map<String, Habitacion> getHabitaciones() {
+		return habitaciones;
+	}
+
+	public void setHabitaciones(Map<String, Habitacion> habitaciones) {
+		this.habitaciones = habitaciones;
 	}
 	
 	// --------------------------------------------------------------------------------------------
@@ -42,7 +94,7 @@ public class Hotel
 		
 		return habitacion;
 	}
-	
+
 	public boolean confirmarDisponibilidad(String nombreTipoHabitacion, GregorianCalendar fechainicio, GregorianCalendar fechafin, Reserva reservaCliente)
 	{
 		int cantHabs = 0;
@@ -61,18 +113,10 @@ public class Hotel
 		}
 
 		for (Reserva reserva : reservas) {
-			
 			Boolean reservaPendienteEnRango = reserva.reservaPendienteEnRango(nombreTipoHabitacion, fechainicio, fechafin);
 			
-			
-			
 			if (reservaPendienteEnRango) {
-				
-				
-							contReservas++;
-					
-				
-
+				contReservas++;
 			}
 		}
 		
@@ -110,11 +154,6 @@ public class Hotel
 	{
 		this.reservas.add(reserva);
 	}
-	
-	public Set<Reserva> getReservasHotel()
-	{
-		return this.reservas;
-	}
 
 	public Set<Reserva> buscarReservasPendientes()
 	{
@@ -129,21 +168,6 @@ public class Hotel
 			
 		}
 		return reservasPendientes;
-	}
-
-	public Map<String, Habitacion> getHabitaciones()
-	{
-		return habitaciones;
-	}
-	
-	public String getNombre()
-	{
-		return this.nombre;
-	}
-	
-	public String getPais()
-	{
-		return this.pais;
 	}
 	
 	public Set<Habitacion> listarHabitaciones()

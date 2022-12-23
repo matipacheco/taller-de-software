@@ -11,17 +11,20 @@ import org.tds.sgh.business.Reserva.Estado;
 import org.tds.sgh.dtos.DTO;
 import org.tds.sgh.infrastructure.Infrastructure;
 
-// verde
+import javax.persistence.*;
+
+@Entity
 public class CadenaHotelera
 {
 	// --------------------------------------------------------------------------------------------
-	
-	private Map<String, Cliente> clientes;
-	
-	private Map<String, Hotel> hoteles;
-	
+	private long id;
+
 	private String nombre;
 	
+	private Map<String, Cliente> clientes;
+
+	private Map<String, Hotel> hoteles;
+
 	private Map<String, TipoHabitacion> tiposHabitacion;
 	
 	// --------------------------------------------------------------------------------------------
@@ -38,6 +41,55 @@ public class CadenaHotelera
 	}
 	
 	// --------------------------------------------------------------------------------------------
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	public long getId() {
+		return id;
+	}
+
+	protected void setId(long id) {
+		this.id = id;
+	}
+
+	public String getNombre() {
+		return this.nombre;
+	}
+	
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+	
+	@OneToMany(cascade=CascadeType.ALL)
+	@MapKey(name="rut")
+	public Map<String, Cliente> getClientes() {
+		return clientes;
+	}
+
+	public void setClientes(Map<String, Cliente> clientes) {
+		this.clientes = clientes;
+	}
+
+	@OneToMany(cascade=CascadeType.ALL)
+	@MapKey(name="nombre")
+	public Map<String, Hotel> getHoteles() {
+		return hoteles;
+	}
+
+	public void setHoteles(Map<String, Hotel> hoteles) {
+		this.hoteles = hoteles;
+	}
+
+	@OneToMany(cascade=CascadeType.ALL)
+	@MapKey(name="nombre")
+	public Map<String, TipoHabitacion> getTiposHabitacion() {
+		return tiposHabitacion;
+	}
+
+	public void setTiposHabitacion(Map<String, TipoHabitacion> tiposHabitacion) {
+		this.tiposHabitacion = tiposHabitacion;
+	}
+	
 	// CU ALTA CLIENTE
 	public Cliente registrarCliente(
 		String rut,
@@ -185,7 +237,7 @@ public class CadenaHotelera
 		Set<Reserva> reservasCliente = new LinkedHashSet<Reserva>();
 		
 		for (Hotel hotel : listarHoteles()) {
-			Set<Reserva> reservas = hotel.getReservasHotel();
+			Set<Reserva> reservas = hotel.getReservas();
 			
 			for (Reserva reserva : reservas) {
 				if (reserva.esDelCliente(clienteSeleccionado) && reserva.getEstado() == Estado.Pendiente
@@ -312,11 +364,6 @@ public class CadenaHotelera
 		}
 		
 		return tipoHabitacion;
-	}
-	
-	public String getNombre()
-	{
-		return this.nombre;
 	}
 	
 	public Set<Cliente> listarClientes()
