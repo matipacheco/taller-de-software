@@ -1,4 +1,6 @@
-
+db/sgh.properties
+db/sgh.script
+db/sgh.log
 .metadata
 bin/
 tmp/
