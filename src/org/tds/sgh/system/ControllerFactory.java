@@ -39,7 +39,7 @@ public class ControllerFactory implements IControllerFactory
 	@Override
 	public IModificarReservaController createModificarReservaController()
 	{
-		return new SRController(this.cadenaHotelera);
+		return new SRControllerModificarReserva(this.cadenaHotelera);
 	}
 	
 	@Override

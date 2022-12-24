@@ -18,9 +18,9 @@ import org.tds.sgh.dtos.TipoHabitacionDTO;
 
 public class SRController implements IAltaClienteController, ICadenaController, ICancelarReservaController, IHacerReservaController, IIdentificarClienteEnRecepcionController, IIdentificarReservaClienteController, IModificarReservaController, ITomarReservaController  {
 	
-	private Cliente cliente;
-	private Reserva reserva;
-	private CadenaHotelera cadenaHotelera;
+	protected Cliente cliente;
+	protected Reserva reserva;
+	protected CadenaHotelera cadenaHotelera;
 	
 	public SRController(CadenaHotelera ch) {
 		this.cadenaHotelera = ch;
@@ -43,11 +43,7 @@ public class SRController implements IAltaClienteController, ICadenaController, 
 	@Override
 	public ReservaDTO seleccionarReserva(long codigoReserva) throws Exception {
 		Reserva reservaSeleccionada = this.cadenaHotelera.seleccionarReserva(codigoReserva, cliente);
-		/*
-		if(cliente != null)
-			if(!reservaSeleccionada.esDelCliente(cliente))
-				throw new Exception("Cliente seleccionado no corresponde a reserva");
-		*/
+	
 		reserva = reservaSeleccionada;
 		return DTO.getInstance().map(reservaSeleccionada);
 	}

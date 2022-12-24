@@ -281,37 +281,6 @@ public class CadenaHotelera
 
 	public Reserva seleccionarReserva(Long codigo, Cliente cliente) throws Exception
 	{	 
-		/*
-		Reserva reserva = null;
-		int totalReservasHotel = 0;
-		
-		for(Hotel hotel : hoteles.values()) {
-			reserva = hotel.buscarReserva(codigo);
-			if(reserva != null) {
-				totalReservasHotel = hotel.getReservasHotel().size();
-				break;
-			}
-		}
-		
-		
-		
-		if(totalReservasHotel == 0) {
-			return null;
-		}
-		else if (totalReservasHotel == 1) {
-			return reserva;
-		}
-		else {
-			if (cliente == null)
-				throw new Exception("No hay cliente seleccionado");
-			if (reserva.esDelCliente(cliente))
-				return reserva;
-			else
-				return null;
-		}
-		*/
-		
-		
 		
 		 for(Hotel hotel: hoteles.values()) {
 			 Reserva reserva = hotel.buscarReserva(codigo);
@@ -325,7 +294,6 @@ public class CadenaHotelera
 					return reserva;
 		 }
 		 
-		
 		 return null;
 	}
 	
@@ -390,5 +358,12 @@ public class CadenaHotelera
 		Reserva reservaActualizada = reserva.cancelar();
 		reservaActualizada.enviarMail("reservaCancelada");
 		return reservaActualizada;
+	}
+
+	public Reserva seleccionarReservaModRes(long codigoReserva, Cliente cliente) throws Exception {
+		if (cliente == null)
+			return null;
+		else
+			return this.seleccionarReserva(codigoReserva, cliente);
 	}
 }
