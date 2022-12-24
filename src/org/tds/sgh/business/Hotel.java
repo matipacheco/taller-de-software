@@ -138,8 +138,10 @@ public class Hotel
 	public Reserva crearReserva(TipoHabitacion tipoHab, Cliente cliente, GregorianCalendar fechainicio, GregorianCalendar fechafin, Boolean modificablePorHuesped)
 	{
 		long codigo = reservas.size() + 1;
-		Reserva reservaCreada = new Reserva(codigo ,tipoHab, cliente, fechainicio, fechafin, modificablePorHuesped, this);
-		reservaCreada.enviarMail("reservaCreada");
+		String codigoHotel = nombre.replaceAll("[^\\d.]", "");
+		long codigoFinal = Long.parseLong(codigoHotel +  Long.toString(codigo));
+		
+		Reserva reservaCreada = new Reserva(codigoFinal ,tipoHab, cliente, fechainicio, fechafin, modificablePorHuesped, this);reservaCreada.enviarMail("reservaCreada");
 		this.reservas.add(reservaCreada);
 
 		return reservaCreada;
